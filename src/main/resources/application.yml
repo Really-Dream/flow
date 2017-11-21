@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:mysql://118.89.191.100/dflow?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: admin
+    password: ZAQxsw!@#123
+    driver-class-name: com.mysql.jdbc.Driver
+  activiti:
+    # 扫描activiti的bpmn文件，如果不关闭的话要配置process文件夹的位置，否则会报错
+    check-process-definitions: false
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
