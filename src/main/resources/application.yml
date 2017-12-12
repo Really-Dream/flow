@@ -5,9 +5,13 @@ spring:
     password: ZAQxsw!@#123
     driver-class-name: com.mysql.jdbc.Driver
   activiti:
-    # 扫描activiti的bpmn文件，如果不关闭的话要配置process文件夹的位置，否则会报错
+    # 鎵弿activiti鐨刡pmn鏂囦欢锛屽鏋滀笉鍏抽棴鐨勮瘽瑕侀厤缃畃rocess鏂囦欢澶圭殑浣嶇疆锛屽惁鍒欎細鎶ラ敊
     check-process-definitions: false
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+  thymeleaf:
+   cache: false
+server:
+  port: 80

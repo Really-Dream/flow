@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"></link>
+    <script th:src="@{/layui/layui.js}"></script>
+</head>
+<body>
+<!--/*@thymesVar id="name" type="java.lang.String"*/-->
+<p th:text="'Hello, ' + ${name}" ></p>
+<button class="layui-btn layui-btn-danger"><i class="layui-icon"></i></button>
+<button class="layui-btn layui-btn-disabled">禁用按钮</button>
+</body>
+
+<script type='text/javascript'>
+    //一般直接写在一个js文件中
+    layui.use(['layer', 'form'], function(){
+        var layer = layui.layer
+            ,form = layui.form;
+
+        layer.msg('Hello World');
+    });
+</script>
+</html>
+
