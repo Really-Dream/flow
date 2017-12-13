@@ -1,25 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Title</title>
-    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"></link>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>layout 后台大布局 - Layui</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
     <script th:src="@{/layui/layui.js}"></script>
 </head>
-<body>
-<!--/*@thymesVar id="name" type="java.lang.String"*/-->
-<p th:text="'Hello, ' + ${name}" ></p>
-<button class="layui-btn layui-btn-danger"><i class="layui-icon"></i></button>
-<button class="layui-btn layui-btn-disabled">禁用按钮</button>
-</body>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
 
-<script type='text/javascript'>
-    //一般直接写在一个js文件中
-    layui.use(['layer', 'form'], function(){
-        var layer = layui.layer
-            ,form = layui.form;
+    <div th:include="/common/head :: html"></div>
 
-        layer.msg('Hello World');
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <table class="layui-hide" id="demo"></table>
+        </div>
+    </div>
+
+    <div th:include="/common/foot :: html"></div>
+
+</div>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+
+    layui.use('table', function(){
+        var table = layui.table;
+
+        table.render({
+            elem: '#demo'
+            ,url:'/bpm/model/list'
+            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            ,cols: [[
+                {field:'id', title: 'ID', sort: true}
+                ,{field:'name', title: '用户名'} //width 支持：数字、百分比和不填写。你还可以通过 minWidth 参数局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                ,{field:'key', title: '性别', sort: true}
+//                ,{field:'city', title: '城市'}
+//                ,{field:'sign', title: '签名'}
+//                ,{field:'classify', title: '职业', align: 'center'} //单元格内容水平居中
+//                ,{field:'experience', title: '积分', sort: true, align: 'right'} //单元格内容水平居中
+//                ,{field:'score', title: '评分', sort: true, align: 'right'}
+//                ,{field:'wealth', title: '财富', sort: true, align: 'right'}
+            ]]
+        });
     });
 </script>
+</body>
 </html>
-
