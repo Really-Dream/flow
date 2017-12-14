@@ -1,17 +1,16 @@
 package com.dream.controller.bpm.model;
 
+import com.dream.util.Convert2Page;
 import com.google.gson.Gson;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Model;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Dream
@@ -27,13 +26,28 @@ public class ModelController {
     @Autowired
     Gson gson;
 
+    @RequestMapping("index")
+    public String index(){
+        return "model/modelList";
+    }
+
     @RequestMapping("/list")
     @ResponseBody
-    public Page<Model> list(){
+    public Map list(){
         List<Model> list = repositoryService.createModelQuery().orderByCreateTime().desc().list();
-//        PageRequest request = new PageRequest(page - 1, limit, null);
-//        Page<Model> models =
-        Page<Model> page1 = new PageImpl<>(list);
-        return page1;
+        return Convert2Page.getPage(list,list.size());
     }
+
+    @RequestMapping("deploy")
+    @ResponseBody
+    public String deploy(String modelId){
+        return null;
+    }
+
+    @RequestMapping("delete")
+    public String delete(String modelId){
+        repositoryService.deleteModel(modelId);
+        return "redirect:/bpm/model/index";
+    }
+
 }

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>layout 后台大布局 - Layui</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+    <script th:src="@{/layui/layui.js}"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+
+    <div th:include="/common/head :: html"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <blockquote class="layui-elem-quote">
+                <a class="layui-btn layui-btn-lg"  onclick="alertissi()" target="_blank">新 建</a>
+            </blockquote>
+            <table class="layui-hide" id="demo"></table>
+        </div>
+    </div>
+
+    <div th:include="/common/foot :: html"></div>
+
+</div>
+
+<div id="info" style="display:none;">
+    <div  style="padding: 10px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">
+        <form class="layui-form layui-form-pane" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">短输入框</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">短输入框</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input"/>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+<script>
+
+    layui.use(['table','util','element','jquery','layer'], function(){
+        $ = layui.jquery;
+        var table = layui.table;
+        var util = layui.util;
+        var layer = layui.layer;
+
+        editorModel = function(id){
+            window.open("/modeler.html?modelId="+id);
+        };
+
+        deploy = function(id){
+
+        };
+
+        editXML = function(id){
+
+        };
+
+        exportXML = function(id){
+
+        };
+
+        deleteModel = function(id){
+            $.getJSON("/bpm/model/delete?modelId="+id,function () {})
+        };
+
+        //触发事件
+        alertissi = function(){
+            //示范一个公告层
+            layer.open({
+                type: 1
+                ,title: false //不显示标题栏
+                ,closeBtn: false
+//                ,area: '300px;'
+                ,shade: 0.5
+                ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                ,btn: ['保存', '关闭']
+                ,btnAlign: 'c'
+                ,moveType: 1 //拖拽模式，0或者1
+                ,content: $("#info").html()
+                ,success: function(layero){
+                    var btn = layero.find('.layui-layer-btn');
+                    btn.find('.layui-layer-btn0').attr({
+                        href: 'http://www.layui.com/'
+                        ,target: '_blank'
+                    });
+                }
+            });
+        };
+
+        table.render({
+            elem: '#demo'
+            ,url:'/bpm/model/list'
+            ,count: 'count'
+            ,cols: [[
+                {field:'id', title: 'modelId',width:'10%'}
+                ,{field:'key', title: 'KEY',width:'15%'}
+                ,{field:'name', title: 'Name',width:'15%'} //width 支持：数字、百分比和不填写。你还可以通过 minWidth 参数局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                ,{field:'createTime', title: '创建时间',width:'15%', sort: true,templet: '<div>{{layui.util.toDateString(d.createTime, \'yyyy-MM-dd HH:mm:ss\')}}</div>'}
+                ,{field:'lastUpdateTime', title: '最后更新时间',width:'15%', sort: true,templet: '<div>{{layui.util.toDateString(d.lastUpdateTime, \'yyyy-MM-dd HH:mm:ss\')}}</div>'}
+                ,{title: '操作',width:'30%', templet: '<div><button class="layui-btn layui-btn-sm" onclick="editorModel({{d.id}})">编辑</button>' +
+                '<button class="layui-btn layui-btn-sm" onclick="deploy({{d.id}})">部署</button>' +
+                '<button class="layui-btn layui-btn-sm" onclick="editXML({{d.id}})">编辑XML</button>' +
+                '<button class="layui-btn layui-btn-sm" onclick="exportXML({{d.id}})">导出</button>' +
+                '<button class="layui-btn layui-btn-sm" onclick="deleteModel({{d.id}})">删除</button></div>'}
+            ]]
+        });
+
+    });
+
+
+
+
+</script>
+
+<script type="text/html" id="tt">
+    {{layui.util.toDateString(d.lastUpdateTime, 'yyyy-MM-dd HH:mm:ss')}}
+</script>
+
+</body>
+</html>
