@@ -1,6 +1,10 @@
 package com.dream.controller.bpm.model;
 
+import com.dream.entity.bpm.model.TbNode;
+import com.dream.repository.bpm.model.TbNodeRepository;
+import com.dream.service.bpm.model.TbNodeService;
 import com.dream.util.Convert2Page;
+import com.dream.util.bpm.model.ProcessInfoCmd;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -12,12 +16,14 @@ import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -27,7 +33,6 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +50,15 @@ public class ModelController {
     @Autowired
     Gson gson;
 
+    @Autowired
+    ProcessEngine processEngine;
+
+    @Autowired
+    TbNodeRepository repository;
+
+    @Autowired
+    TbNodeService service;
+
     @RequestMapping("index")
     public String index(){
         return "model/modelList";
@@ -59,8 +73,42 @@ public class ModelController {
 
     @RequestMapping("deploy")
     @ResponseBody
+    @Transactional
     public String deploy(String modelId){
-        return null;
+        try {
+            Model modelData = repositoryService.getModel(modelId);
+            ObjectNode modelNode;
+            modelNode = (ObjectNode) new ObjectMapper().readTree(repositoryService.getModelEditorSource(modelData.getId()));
+            byte[] bpmnBytes;
+
+            BpmnModel model = new BpmnJsonConverter().convertToBpmnModel(modelNode);
+            bpmnBytes = new BpmnXMLConverter().convertToXML(model,"UTF-8");
+
+            String processName = modelData.getName() + ".bpmn20.xml";
+            Deployment deployment = repositoryService.createDeployment().name(modelData.getName()).addString(
+                    processName, new String(bpmnBytes,"UTF-8")).deploy();
+
+            List<ProcessDefinition> processDefinitions = repositoryService
+                    .createProcessDefinitionQuery()
+                    .deploymentId(deployment.getId()).list();
+
+            TbNode tbNode = new TbNode();
+//            tbNode.setId("2");
+            tbNode.setNodeId("sda");
+            tbNode.setNodeName("A");
+            tbNode.setNextUser("s");
+            tbNode.setProcDefId(null);
+            tbNode.setNodeType("s");
+            service.save(tbNode);
+
+            for (ProcessDefinition pdf : processDefinitions) {
+                processEngine.getManagementService().executeCommand(new ProcessInfoCmd(pdf.getId(),repository));
+            }
+            return gson.toJson("部署成功！");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return gson.toJson("部署失败！");
+        }
     }
 
     @RequestMapping("delete")

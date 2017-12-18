@@ -89,7 +89,9 @@
         };
 
         deploy = function(id){
-
+            $.getJSON("/bpm/model/deploy?modelId="+id,function (data) {
+                alertText(data);
+            })
         };
 
         editXML = function(id){
@@ -102,11 +104,9 @@
                 dataType: "json",
                 async: false,
                 success: function(data){
-//                    $("#bpmnXML").html(data);
                     bpmnXML = data;
                 },
                 error:function () {
-//                    $("#bpmnXML").html("获取数据失败！");
                     bpmnXML = "获取数据失败！";
                 }
             });
@@ -143,12 +143,28 @@
                 dataType: "json",
                 async: false,
                 success: function(data){
-//                    $("#bpmnXML").html(data);
+                    alertText(data);
                 },
                 error:function () {
-//                    $("#bpmnXML").html("获取数据失败！");
+                    alertText(data);
                 }
             });
+        }
+
+        alertText = function(data){
+            layer.open({
+                type: 1
+                , offset: 'auto' //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                , id: 'deleteModel' //防止重复弹出
+                , content: '<div style="padding: 20px 100px;">' + data + '</div>'
+                , btn: '关闭'
+                , btnAlign: 'c' //按钮居中
+                , shade: 0.5 //不显示遮罩
+                , yes: function () {
+                    layer.closeAll();
+                    modelList();
+                }
+            })
         }
 
         exportXML = function(id){
@@ -157,19 +173,7 @@
 
         deleteModel = function(id){
             $.getJSON("/bpm/model/delete?modelId="+id,function(data) {
-                    layer.open({
-                        type: 1
-                        ,offset: 'auto' //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                        ,id: 'deleteModel' //防止重复弹出
-                        ,content: '<div style="padding: 20px 100px;">'+ data +'</div>'
-                        ,btn: '关闭'
-                        ,btnAlign: 'c' //按钮居中
-                        ,shade: 0.5 //不显示遮罩
-                        ,yes: function(){
-                            layer.closeAll();
-                            modelList();
-                        }
-                    });
+                alertText(data);
             })
         };
 
