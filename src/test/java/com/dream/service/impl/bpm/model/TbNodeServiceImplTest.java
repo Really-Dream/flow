@@ -1,13 +1,16 @@
 package com.dream.service.impl.bpm.model;
 
-import com.dream.entity.bpm.model.TbNode;
+import com.dream.bpm.model.entity.TbNode;
+import com.dream.bpm.model.serviceImpl.TbNodeServiceImpl;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.Assert.*;
+import java.util.List;
 
 /**
  * Created by Dream
@@ -37,11 +40,17 @@ public class TbNodeServiceImplTest {
     }
 
     @Test
+    @Transactional
     public void deleteAllByProcDefId() {
+        service.deleteAllByProcDefId("process:19:20012");
+        List<TbNode> list = service.findAllByProcDefId("process:19:20012");
+        Assert.assertEquals(list.size(),0);
     }
 
     @Test
     public void findAllByProcDefId() {
+        List<TbNode> list = service.findAllByProcDefId("process:19:20012");
+        Assert.assertNotNull(list);
     }
 
 }

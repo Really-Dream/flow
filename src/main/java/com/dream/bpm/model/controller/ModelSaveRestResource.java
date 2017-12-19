@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.dream.controller.bpm.model;
+package com.dream.bpm.model.controller;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

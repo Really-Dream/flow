@@ -1,9 +1,8 @@
-package com.dream.util.bpm.model;
+package com.dream.bpm.model.util;
 
-import com.dream.entity.bpm.model.TbNode;
-import com.dream.repository.bpm.model.TbNodeRepository;
+import com.dream.bpm.model.entity.TbNode;
+import com.dream.bpm.model.service.TbNodeService;
 import com.dream.util.KeyUtil;
-import com.dream.util.SpringContextHolder;
 import org.activiti.bpmn.model.*;
 import org.activiti.bpmn.model.Process;
 import org.activiti.engine.impl.cmd.GetBpmnModelCmd;
@@ -27,9 +26,9 @@ public class ProcessInfoCmd implements Command<Void>{
 
     private Map<String,String> userMap;
 
-    private TbNodeRepository repository;
+    private TbNodeService repository;
 
-    public ProcessInfoCmd(String processDefinitionId,TbNodeRepository repository){
+    public ProcessInfoCmd(String processDefinitionId,TbNodeService repository){
         this.processDefinitionId = processDefinitionId;
         this.repository = repository;
     }
@@ -45,14 +44,13 @@ public class ProcessInfoCmd implements Command<Void>{
         List<TbNode> nodes = new ArrayList<>();
         for (ActivityImpl activity : activityList) {
             TbNode tbNode = new TbNode();
-            tbNode.setId("ss");
+            tbNode.setId(KeyUtil.getUniqueKey());
             tbNode.setProcDefId(processDefinitionId);
             tbNode.setNodeId(activity.getId());
             tbNode.setNodeName((String) activity.getProperties().get("name"));
             tbNode.setNodeType((String) activity.getProperties().get("type"));
             tbNode.setNextUser(userMap.get(activity.getId()));
             nodes.add(tbNode);
-//            getNodeInfoMapper().save(tbNode);
         }
         repository.save(nodes);
         return null;
@@ -74,7 +72,4 @@ public class ProcessInfoCmd implements Command<Void>{
         this.userMap = map;
     }
 
-    private TbNodeRepository getNodeInfoMapper() {
-        return SpringContextHolder.getBean(TbNodeRepository.class);
-    }
 }

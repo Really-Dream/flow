@@ -1,6 +1,6 @@
-package com.dream.service.bpm.model;
+package com.dream.bpm.model.service;
 
-import com.dream.entity.bpm.model.TbNode;
+import com.dream.bpm.model.entity.TbNode;
 
 import java.util.List;
 

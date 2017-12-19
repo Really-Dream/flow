@@ -1,6 +1,6 @@
-package com.dream.repository.bpm.model;
+package com.dream.bpm.model.repository;
 
-import com.dream.entity.bpm.model.TbNode;
+import com.dream.bpm.model.entity.TbNode;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

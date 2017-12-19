@@ -1,4 +1,4 @@
-package com.dream.entity.bpm.model;
+package com.dream.bpm.model.entity;
 
 import lombok.Data;
 
@@ -21,7 +21,4 @@ public class TbNode {
     private String nodeName;
     private String nextUser;
 
-    public TbNode(){
-
-    }
 }

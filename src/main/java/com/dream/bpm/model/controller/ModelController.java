@@ -1,10 +1,7 @@
-package com.dream.controller.bpm.model;
+package com.dream.bpm.model.controller;
 
-import com.dream.entity.bpm.model.TbNode;
-import com.dream.repository.bpm.model.TbNodeRepository;
-import com.dream.service.bpm.model.TbNodeService;
+import com.dream.bpm.model.serviceImpl.ModelService;
 import com.dream.util.Convert2Page;
-import com.dream.util.bpm.model.ProcessInfoCmd;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -16,9 +13,7 @@ import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.RepositoryService;
-import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
-import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +34,7 @@ import java.util.Map;
 /**
  * Created by Dream
  * 2017/12/13.
+ * 模型控制类
  */
 @Controller
 @RequestMapping("/bpm/model")
@@ -48,22 +44,23 @@ public class ModelController {
     RepositoryService repositoryService;
 
     @Autowired
+    ModelService modelService;
+
+    @Autowired
     Gson gson;
 
-    @Autowired
-    ProcessEngine processEngine;
 
-    @Autowired
-    TbNodeRepository repository;
-
-    @Autowired
-    TbNodeService service;
-
+    /**
+     * 首页
+     */
     @RequestMapping("index")
     public String index(){
         return "model/modelList";
     }
 
+    /**
+     * model列表
+     */
     @RequestMapping("/list")
     @ResponseBody
     public Map list(){
@@ -71,39 +68,16 @@ public class ModelController {
         return Convert2Page.getPage(list,list.size());
     }
 
+    /**
+     * 部署
+     * @param modelId modelID
+     */
     @RequestMapping("deploy")
     @ResponseBody
     @Transactional
     public String deploy(String modelId){
         try {
-            Model modelData = repositoryService.getModel(modelId);
-            ObjectNode modelNode;
-            modelNode = (ObjectNode) new ObjectMapper().readTree(repositoryService.getModelEditorSource(modelData.getId()));
-            byte[] bpmnBytes;
-
-            BpmnModel model = new BpmnJsonConverter().convertToBpmnModel(modelNode);
-            bpmnBytes = new BpmnXMLConverter().convertToXML(model,"UTF-8");
-
-            String processName = modelData.getName() + ".bpmn20.xml";
-            Deployment deployment = repositoryService.createDeployment().name(modelData.getName()).addString(
-                    processName, new String(bpmnBytes,"UTF-8")).deploy();
-
-            List<ProcessDefinition> processDefinitions = repositoryService
-                    .createProcessDefinitionQuery()
-                    .deploymentId(deployment.getId()).list();
-
-            TbNode tbNode = new TbNode();
-//            tbNode.setId("2");
-            tbNode.setNodeId("sda");
-            tbNode.setNodeName("A");
-            tbNode.setNextUser("s");
-            tbNode.setProcDefId(null);
-            tbNode.setNodeType("s");
-            service.save(tbNode);
-
-            for (ProcessDefinition pdf : processDefinitions) {
-                processEngine.getManagementService().executeCommand(new ProcessInfoCmd(pdf.getId(),repository));
-            }
+            modelService.deploy(modelId);
             return gson.toJson("部署成功！");
         } catch (Exception e) {
             e.printStackTrace();
@@ -111,6 +85,10 @@ public class ModelController {
         }
     }
 
+    /**
+     * 删除模型
+     * @param modelId modelID
+     */
     @RequestMapping("delete")
     @ResponseBody
     public String delete(String modelId){
@@ -123,6 +101,12 @@ public class ModelController {
         return gson.toJson("删除成功！");
     }
 
+    /**
+     * 新建模型
+     * @param modelName 名称
+     * @param modelKey  Key
+     * @param description   描述
+     */
     @RequestMapping("createModel")
     public void createModel(String modelName, String modelKey,String description, HttpServletRequest request, HttpServletResponse response){
         try {
@@ -156,6 +140,10 @@ public class ModelController {
         }
     }
 
+    /**
+     * 获取model的XML
+     * @param modelId modelID
+     */
     @RequestMapping("getBpmnXML")
     @ResponseBody
     public String getBpmnXML(String modelId){
@@ -179,6 +167,12 @@ public class ModelController {
         }
     }
 
+    /**
+     * 保存XML
+     * @param modelId modelID
+     * @param bpmnXML XML
+     * @return
+     */
     @RequestMapping("saveModelXML")
     @ResponseBody
     public String saveModelXML(String modelId,String bpmnXML){
@@ -205,6 +199,10 @@ public class ModelController {
         }
     }
 
+    /**
+     * XML文件导出
+     * @param modelId modelID
+     */
     @RequestMapping("export")
     public void export(String modelId,HttpServletResponse response){
         try {

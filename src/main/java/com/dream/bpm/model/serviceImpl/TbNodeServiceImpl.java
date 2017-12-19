@@ -1,8 +1,8 @@
-package com.dream.service.impl.bpm.model;
+package com.dream.bpm.model.serviceImpl;
 
-import com.dream.entity.bpm.model.TbNode;
-import com.dream.repository.bpm.model.TbNodeRepository;
-import com.dream.service.bpm.model.TbNodeService;
+import com.dream.bpm.model.entity.TbNode;
+import com.dream.bpm.model.repository.TbNodeRepository;
+import com.dream.bpm.model.service.TbNodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
