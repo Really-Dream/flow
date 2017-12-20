@@ -6,6 +6,8 @@
     <title>layout 后台大布局 - Layui</title>
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
     <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/self/model/modelList.js}"></script>
+    <script th:src="@{/self/common/shadow.js}"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -16,7 +18,9 @@
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
             <blockquote class="layui-elem-quote">
-                <a class="layui-btn layui-btn-lg"  onclick="createModel()" target="_blank">新 建</a>
+                <button class="layui-btn" function="top" onclick="createModel()" topwidth="700px" topheight="500px" inputs="type:#type">
+                    <i class="layui-icon"></i>新增
+                </button>
             </blockquote>
             <table class="layui-hide" id="demo"></table>
         </div>
@@ -50,7 +54,7 @@
             </div>
             <hr/>
             <div class="layui-form-item" style="text-align: center;">
-                <button class="layui-btn" lay-submit="">保存</button>
+                <button class="layui-btn" lay-submit="" onclick="shadow_()">保存</button>
                 <button class="layui-btn layui-btn-primary" type="reset" onclick="layer.close(create);" >关闭</button>
             </div>
         </form>
@@ -84,115 +88,6 @@
         var util = layui.util;
         var layer = layui.layer;
 
-        editorModel = function(id){
-            window.open("/modeler.html?modelId="+id);
-        };
-
-        deploy = function(id){
-            $.getJSON("/bpm/model/deploy?modelId="+id,function (data) {
-                alertText(data);
-            })
-        };
-
-        editXML = function(id){
-            var bpmnXML;
-            $("#modelId").val(id);
-
-            $.ajax({
-                url: "/bpm/model/getBpmnXML",
-                data:{rand:Math.random(),modelId:id},
-                dataType: "json",
-                async: false,
-                success: function(data){
-                    bpmnXML = data;
-                },
-                error:function () {
-                    bpmnXML = "获取数据失败！";
-                }
-            });
-
-            //示范一个公告层
-            create = layer.open({
-                type: 1
-                ,title: false //不显示标题栏
-                ,closeBtn: false
-                ,area: ['70%','60%']
-                ,shade: 0.5
-                ,id: 'createModel' //设定一个id，防止重复弹出
-                ,btnAlign: 'c'
-                ,moveType: false //拖拽模式，0或者1
-                ,content: $("#editXML").html()
-            });
-
-            $("#createModel").find("textarea").each(function(){
-                $(this).val(bpmnXML);
-            });
-        };
-
-        saveModelXML = function(){
-            var html;
-            $("#createModel").find("textarea").each(function(){
-                html = $(this).val();
-            });
-            $.ajax({
-                url: "/bpm/model/saveModelXML",
-                data: {
-                    modelId : $("#modelId").val(),
-                    bpmnXML : html
-                },
-                dataType: "json",
-                async: false,
-                success: function(data){
-                    alertText(data);
-                },
-                error:function () {
-                    alertText(data);
-                }
-            });
-        }
-
-        alertText = function(data){
-            layer.open({
-                type: 1
-                , offset: 'auto' //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                , id: 'deleteModel' //防止重复弹出
-                , content: '<div style="padding: 20px 100px;">' + data + '</div>'
-                , btn: '关闭'
-                , btnAlign: 'c' //按钮居中
-                , shade: 0.5 //不显示遮罩
-                , yes: function () {
-                    layer.closeAll();
-                    modelList();
-                }
-            })
-        }
-
-        exportXML = function(id){
-            location.href = "export?modelId="+id;
-        };
-
-        deleteModel = function(id){
-            $.getJSON("/bpm/model/delete?modelId="+id,function(data) {
-                alertText(data);
-            })
-        };
-
-        //触发事件
-        createModel = function(){
-            //示范一个公告层
-            create = layer.open({
-                type: 1
-                ,title: false //不显示标题栏
-                ,closeBtn: false
-                ,area: '30%'
-                ,shade: 0.5
-                ,id: 'createModel' //设定一个id，防止重复弹出
-                ,btnAlign: 'c'
-                ,moveType: false //拖拽模式，0或者1
-                ,content: $("#info").html()
-            });
-        };
-
         modelList = function(){
             table.render({
                 elem: '#demo'
@@ -217,13 +112,6 @@
 
     });
 
-
-
-
-</script>
-
-<script type="text/html" id="tt">
-    {{layui.util.toDateString(d.lastUpdateTime, 'yyyy-MM-dd HH:mm:ss')}}
 </script>
 
 </body>

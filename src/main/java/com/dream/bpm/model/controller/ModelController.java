@@ -74,7 +74,6 @@ public class ModelController {
      */
     @RequestMapping("deploy")
     @ResponseBody
-    @Transactional
     public String deploy(String modelId){
         try {
             modelService.deploy(modelId);

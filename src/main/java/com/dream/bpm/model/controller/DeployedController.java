@@ -2,6 +2,7 @@ package com.dream.bpm.model.controller;
 
 import com.dream.bpm.model.serviceImpl.DeployedService;
 import com.dream.util.Convert2Page;
+import com.google.gson.Gson;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class DeployedController {
     @Autowired
     DeployedService deployedService;
 
+    @Autowired
+    Gson gson;
+
     @RequestMapping("list")
     @ResponseBody
     public Map list(){
@@ -45,13 +49,19 @@ public class DeployedController {
 
     @RequestMapping("delete")
     @ResponseBody
-    public String delete(String deploymentId,String procDefId){
+    public String delete(String deploymentId){
         try{
-            deployedService.delete(deploymentId,procDefId);
-            return "删除成功";
+            ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().deploymentId(deploymentId).singleResult();
+            deployedService.delete(deploymentId,processDefinition.getId());
+            return gson.toJson("删除成功");
         }catch (Exception e){
             e.printStackTrace();
-            return "删除失败";
+            return gson.toJson("删除失败");
         }
+    }
+
+    @RequestMapping("index")
+    public String index(){
+        return "model/deployedList";
     }
 }

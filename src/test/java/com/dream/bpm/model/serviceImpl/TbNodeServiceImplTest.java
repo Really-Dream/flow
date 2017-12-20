@@ -1,4 +1,4 @@
-package com.dream.service.impl.bpm.model;
+package com.dream.bpm.model.serviceImpl;
 
 import com.dream.bpm.model.entity.TbNode;
 import com.dream.bpm.model.serviceImpl.TbNodeServiceImpl;
