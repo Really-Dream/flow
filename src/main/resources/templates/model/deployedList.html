@@ -60,7 +60,9 @@
                     {field:'ID', title: '流程定义ID',width:'20%',sort: true}
                     ,{field:'name', title: '流程名称',width:'30%',sort: true}
                     ,{field:'deploymentId', title: '部署ID',width:'20%',sort: true}
-                    ,{title: '操作',width:'30%', templet: '<div><button class="layui-btn layui-btn-sm" onclick="deleteDeployed({{d.deploymentId}})">删除</button></div>'}
+                    ,{title: '操作',width:'30%', templet: '<div><button class="layui-btn layui-btn-sm" onclick="deleteDeployed({{d.deploymentId}})">删除</button>' +
+                    '<button class="layui-btn layui-btn-sm" onclick="deleteDeployed({{d.deploymentId}})">配置</button>' +
+                    '</div>'}
                 ]]
             });
         };
