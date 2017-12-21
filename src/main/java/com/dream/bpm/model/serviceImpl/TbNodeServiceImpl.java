@@ -35,6 +35,6 @@ public class TbNodeServiceImpl implements TbNodeService{
 
     @Override
     public List<TbNode> findAllByProcDefId(String procDefId) {
-        return repository.findAllByProcDefId(procDefId);
+        return repository.findAllByProcDefIdAndNodeType(procDefId,"userTask");
     }
 }

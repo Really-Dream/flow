@@ -1,6 +1,8 @@
 package com.dream.bpm.model.controller;
 
+import com.dream.bpm.model.entity.TbNode;
 import com.dream.bpm.model.serviceImpl.DeployedService;
+import com.dream.bpm.model.serviceImpl.TbNodeServiceImpl;
 import com.dream.util.Convert2Page;
 import com.google.gson.Gson;
 import org.activiti.engine.RepositoryService;
@@ -30,6 +32,9 @@ public class DeployedController {
     DeployedService deployedService;
 
     @Autowired
+    TbNodeServiceImpl tbNodeService;
+
+    @Autowired
     Gson gson;
 
     @RequestMapping("list")
@@ -49,10 +54,9 @@ public class DeployedController {
 
     @RequestMapping("delete")
     @ResponseBody
-    public String delete(String deploymentId){
+    public String delete(String deploymentId,String procDefId){
         try{
-            ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().deploymentId(deploymentId).singleResult();
-            deployedService.delete(deploymentId,processDefinition.getId());
+            deployedService.delete(deploymentId,procDefId);
             return gson.toJson("删除成功");
         }catch (Exception e){
             e.printStackTrace();
@@ -63,5 +67,17 @@ public class DeployedController {
     @RequestMapping("index")
     public String index(){
         return "model/deployedList";
+    }
+
+    @RequestMapping("nodeList")
+    @ResponseBody
+    public Map nodeList(String procDefId){
+        List<TbNode> list = tbNodeService.findAllByProcDefId(procDefId);
+        return Convert2Page.getPage(list,list.size());
+    }
+
+    @RequestMapping("nodeIndex")
+    public String nodeIndex(){
+        return "model/nodeEdit";
     }
 }

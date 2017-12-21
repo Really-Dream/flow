@@ -5,52 +5,54 @@ layui.use(['table','util','element','jquery','layer','form'], function(){
     var layer = layui.layer;
     var element = layui.element;
 
-    $("#ul_").find("i").eq(0).remove();
+    tabAdd= function(deployedId,id){
 
+        //删除同一流程下的tab页
+        element.tabDelete('demo', deployedId);
 
+        //新增一个Tab项
+        element.tabAdd('demo', {
+            title: id //用于演示
+            // ,content: "sdasdadsa"
+            ,id: deployedId //实际使用一般是规定好的id，这里以时间戳模拟下
+        });
 
-    var active = {
-        tabAdd: function(){
-            //新增一个Tab项
-            element.tabAdd('demo', {
-                title: '新选项'+ (Math.random()*1000|0) //用于演示
-                ,content: '内容'+ (Math.random()*1000|0)
-                ,id: "ss" //实际使用一般是规定好的id，这里以时间戳模拟下
-            })
-//                alert($(".layui-tab-close").length);
-//                $("#ul_").find("i").eq(0).remove();
-               $("#ul_").find("li").eq($("#ul_").find("li").length-1).append("<i class='layui-icon layui-unselect layui-tab-close' onclick=\"tabDelete('ss')\">ဆ</i>");
-//             alert($("#ul_").find("li").eq($("#ul_").find("li").length-1).html("<i>ဆ</i>"));
-        },
+        //手动添加关闭按钮 可使用lay-allowclose="true" 设置全部可关闭
+        $("#ul_").find("li").eq($("#ul_").find("li").length-1).append("<i class='layui-icon layui-unselect layui-tab-close' onclick=\"tabDelete("+deployedId+")\">ဆ</i>");
 
+        //选中刚新建的tab项
+        element.tabChange('demo', deployedId);
+
+        //插入添加tab的位置
+        $('.layui-show')[0].innerHTML = "<table class='layui-hide' id='"+deployedId+"'></table>"
+
+        table.render({
+            // elem: '.layui-show'
+            elem: "#"+deployedId
+            ,url:'/bpm/deployed/nodeList?procDefId='+encodeURIComponent(id)
+            ,count: 'count'
+            ,cols: [[
+                {field:'nodeId', title: '节点ID',width:'30%',sort: true}
+                ,{field:'nodeName', title: '节点名称',width:'40%',sort: true}
+                ,{title: '操作',width:'30%', templet: '<div>' +
+                '<button class="layui-btn layui-btn-sm" onclick="nodeEdit({{d.id}})">编辑</button>' +
+                '</div>'}
+            ]]
+        });
     };
+
     tabDelete= function(id){
         //删除指定Tab项
-        element.tabDelete('demo', id); //删除：“商品管理”
-    }
+        element.tabDelete('demo', id); //删除
+    };
 
-    $('.site-demo-active').on('click', function(){
-        var othis = $(this), type = othis.data('type');
-        active[type] ? active[type].call(this, othis) : '';
-    });
-
-    //Hash地址的定位
-    var layid = location.hash.replace(/^#test=/, '');
-    element.tabChange('test', layid);
-
-    element.on('tab(test)', function(elem){
-        location.hash = 'test='+ $(this).attr('lay-id');
-    });
-
-    deleteDeployed = function(deploymentId){
-        $("i").remove();
-        return;
+    deleteDeployed = function(deploymentId,id){
         shadow_();
         $.ajax({
             url: "/bpm/deployed/delete",
-            data: {deploymentId: deploymentId},
+            data: {deploymentId: deploymentId,procDefId: id},
             dataType: "json",
-            async: false,
+            async: true,
             success: function (data) {
                 alertText(data);
                 modelList();
@@ -71,8 +73,8 @@ layui.use(['table','util','element','jquery','layer','form'], function(){
                 {field:'ID', title: '流程定义ID',width:'20%',sort: true}
                 ,{field:'name', title: '流程名称',width:'30%',sort: true}
                 ,{field:'deploymentId', title: '部署ID',width:'20%',sort: true}
-                ,{title: '操作',width:'30%', templet: '<div><button class="layui-btn layui-btn-sm" onclick="deleteDeployed({{d.deploymentId}})">删除</button>' +
-                '<button class="layui-btn layui-btn-sm" onclick="deleteDeployed({{d.deploymentId}})">配置</button>' +
+                ,{title: '操作',width:'30%', templet: '<div><button class="layui-btn layui-btn-sm" onclick="deleteDeployed({{d.deploymentId}},&apos;{{d.ID}}&apos;)">删除</button>' +
+                '<button class="layui-btn layui-btn-sm" onclick="tabAdd({{d.deploymentId}},&apos;{{d.ID}}&apos;)">配置</button>' +
                 '</div>'}
             ]]
         });
@@ -81,3 +83,17 @@ layui.use(['table','util','element','jquery','layer','form'], function(){
     modelList();
 
 });
+
+function nodeEdit(){
+    create = layer.open({
+        type: 2
+        ,title: false //不显示标题栏
+        ,closeBtn: false
+        ,area: ['70%','60%']
+        ,shade: 0.5
+        ,id: 'createModel' //设定一个id，防止重复弹出
+        ,btnAlign: 'c'
+        ,moveType: false //拖拽模式，0或者1
+        ,content: '/bpm/deployed/nodeIndex'
+    });
+}

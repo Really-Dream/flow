@@ -12,5 +12,5 @@ import java.util.List;
  */
 public interface TbNodeRepository extends JpaRepository<TbNode,String> {
     void deleteAllByProcDefId(String procDefId);
-    List<TbNode> findAllByProcDefId(String procDefId);
+    List<TbNode> findAllByProcDefIdAndNodeType(String procDefId,String noteType);
 }
