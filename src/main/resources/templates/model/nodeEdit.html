@@ -17,6 +17,9 @@
     <button class="layui-btn" onclick="addOperation()" topwidth="700px" topheight="500px" inputs="type:#type">
         <i class="layui-icon"></i>添加操作项
     </button>
+    <button class="layui-btn layui-btn-danger" onclick="deleteOperation()" topwidth="700px" topheight="500px" inputs="type:#type">
+        <i class="layui-icon"></i>删除操作项
+    </button>
 </blockquote>
 
 <form class="layui-form" action="" style="margin: 15px;">
@@ -28,13 +31,13 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">操作项名称</label>
                     <div class="layui-input-inline">
-                        <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input"/>
+                        <input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input"/>
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">操作项ID</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input"/>
+                        <input type="text" name="id" lay-verify="required" autocomplete="off" class="layui-input"/>
                     </div>
                 </div>
             </div>
@@ -42,20 +45,20 @@
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">处理人SQL</label>
                 <div class="layui-input-block">
-                    <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+                    <textarea placeholder="请输入内容" name = 'sql' class="layui-textarea" autocomplete="off"></textarea>
                 </div>
             </div>
 
             <div class="layui-form-item" pane="">
                 <label class="layui-form-label">选人模式</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="sex" value="男" title="单选" checked=""/>
-                    <input type="radio" name="sex" value="女" title="多选"/>
-                    <input type="radio" name="sex" value="女" title="不选"/>
+                    <input type="radio" name="userType" value="1" title="单选" checked=""/>
+                    <input type="radio" name="userType" value="2" title="多选"/>
+                    <input type="radio" name="userType" value="0" title="不选"/>
                 </div>
             </div>
 
-        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;"></fieldset>
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;"></fieldset>
 
         </div>
     </div>
@@ -71,16 +74,42 @@
 
 <script>
 
+    var form;
     function addOperation(){
-        $("#all_operation").append($("#operation_").html());
+        $("#all_operation").append("<div lay-filter='test1'>"+$("#operation_").html()+"</div>");
+        form.render("radio");
+    }
+
+    function deleteOperation(){
+        if($("#all_operation").children().length > 1){
+            $("#all_operation").children()[$("#all_operation").children().length-1].remove();
+        }
     }
 
     layui.use(['form', 'layedit', 'laydate'], function(){
-        var form = layui.form
-            ,layer = layui.layer;
+        form = layui.form;
+        var layer = layui.layer;
 
         //监听提交
         form.on('submit(demo1)', function(data){
+            var val=$('input:radio[name="userType"]:checked').val();
+            alert(val);
+
+            $("input[name='name']").each(function(){
+            });
+
+            $("input[name='id']").each(function(){
+            });
+
+            $("textarea[name='sql']").each(function(){
+            });
+
+            $("input[name='userType']").each(function(){
+                if($(this).attr('checked') =='checked'){
+                    alert($(this).val());
+                }
+            });
+
             layer.alert(JSON.stringify(data.field), {
                 title: '最终的提交信息'
             })
