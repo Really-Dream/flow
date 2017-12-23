@@ -89,7 +89,7 @@ function nodeEdit(){
         type: 2
         ,title: false //不显示标题栏
         ,closeBtn: false
-        ,area: ['70%','60%']
+        ,area: ['50%','50%']
         ,shade: 0.5
         ,id: 'createModel' //设定一个id，防止重复弹出
         ,btnAlign: 'c'

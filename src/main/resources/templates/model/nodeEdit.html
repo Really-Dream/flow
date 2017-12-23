@@ -76,8 +76,10 @@
 
     var form;
     function addOperation(){
-        $("#all_operation").append("<div lay-filter='test1'>"+$("#operation_").html()+"</div>");
-        form.render("radio");
+        var s = "test1";
+        var c = "layui-form";
+        $("#all_operation").append("<div class="+c+" lay-filter="+s+">"+$("#operation_").html()+"</div>");
+        form.render("radio","test1");
     }
 
     function deleteOperation(){
