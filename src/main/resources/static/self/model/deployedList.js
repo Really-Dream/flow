@@ -35,7 +35,7 @@ layui.use(['table','util','element','jquery','layer','form'], function(){
                 {field:'nodeId', title: '节点ID',width:'30%',sort: true}
                 ,{field:'nodeName', title: '节点名称',width:'40%',sort: true}
                 ,{title: '操作',width:'30%', templet: '<div>' +
-                '<button class="layui-btn layui-btn-sm" onclick="nodeEdit({{d.id}})">编辑</button>' +
+                '<button class="layui-btn layui-btn-sm" onclick="nodeInfo(&apos;{{d.nodeId}}&apos;)">详情</button>' +
                 '</div>'}
             ]]
         });
@@ -81,6 +81,40 @@ layui.use(['table','util','element','jquery','layer','form'], function(){
     };
 
     modelList();
+
+    nodeInfo = function(nodeId){
+        //删除同一流程下的tab页
+        element.tabDelete('demo', nodeId);
+
+        //新增一个Tab项
+        element.tabAdd('demo', {
+            title: nodeId //用于演示
+            ,id: nodeId //实际使用一般是规定好的id，这里以时间戳模拟下
+        });
+
+        //手动添加关闭按钮 可使用lay-allowclose="true" 设置全部可关闭
+        $("#ul_").find("li").eq($("#ul_").find("li").length-1).append("<i class='layui-icon layui-unselect layui-tab-close' onclick=\"tabDelete("+nodeId+")\">ဆ</i>");
+
+        //选中刚新建的tab项
+        element.tabChange('demo', nodeId);
+
+        //插入添加tab的位置
+        $('.layui-show')[0].innerHTML = "<table class='layui-hide' id='"+nodeId+"'></table>"
+
+        table.render({
+            // elem: '.layui-show'
+            elem: "#"+nodeId
+            ,url:'/bpm/deployed/nodeList?procDefId='+encodeURIComponent(nodeId)
+            ,count: 'count'
+            ,cols: [[
+                {field:'nodeId', title: '节点ID',width:'30%',sort: true}
+                ,{field:'nodeName', title: '节点名称',width:'40%',sort: true}
+                ,{title: '操作',width:'30%', templet: '<div>' +
+                '<button class="layui-btn layui-btn-sm" onclick="nodeEdit({{d.id}})">详情</button>' +
+                '</div>'}
+            ]]
+        });
+    }
 
 });
 
