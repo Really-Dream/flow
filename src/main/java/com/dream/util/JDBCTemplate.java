@@ -1,5 +1,6 @@
-package com.dream.bpm.model.serviceImpl;
+package com.dream.util;
 
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
