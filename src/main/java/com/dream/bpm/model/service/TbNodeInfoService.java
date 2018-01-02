@@ -1,5 +1,6 @@
 package com.dream.bpm.model.service;
 
+import com.dream.bpm.model.DTO.TbNodeInfoDTO;
 import com.dream.bpm.model.entity.TbNodeInfo;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface TbNodeInfoService {
     List<TbNodeInfo> findAllByProcDefIdAndAndTaskDefKey(String procDefId,String taskDefKey);
 
     void save(TbNodeInfo tbNodeInfo);
+
+    List<TbNodeInfoDTO> findTbNodeInfoDTOList(String procDefId,String taskDefKey);
 }

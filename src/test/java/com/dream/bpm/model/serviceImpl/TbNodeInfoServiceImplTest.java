@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.*;
 
@@ -41,6 +44,11 @@ public class TbNodeInfoServiceImplTest {
         tbNodeInfo.setUserType("2");
         tbNodeInfo.setOperationSql("");
         tbNodeInfoService.save(tbNodeInfo);
+    }
+
+    @Test
+    public void getUserBySQL(){
+        tbNodeInfoService.getUserBySQL("");
     }
 
 }

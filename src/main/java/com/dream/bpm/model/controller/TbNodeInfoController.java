@@ -28,4 +28,6 @@ public class TbNodeInfoController {
     public List<TbNodeInfo> list(String procDefId, String taskDefKey){
         return nodeInfoService.findAllByProcDefIdAndAndTaskDefKey(procDefId,taskDefKey);
     }
+
+
 }

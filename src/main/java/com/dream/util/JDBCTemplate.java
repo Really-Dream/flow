@@ -1,6 +1,6 @@
 package com.dream.util;
 
-import lombok.Data;
+import com.dream.bpm.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -27,6 +27,19 @@ public class JDBCTemplate {
             @Override
             public String mapRow(ResultSet rs,int rowNum) throws SQLException{
                 return rs.getString("node_name");
+            }
+        });
+    }
+
+    public List<User> getUser(String SQL){
+        return jdbcTemplate.query(SQL, new RowMapper<User>() {
+
+            @Override
+            public User mapRow(ResultSet rs,int rowNum) throws SQLException{
+                User user = new User();
+                user.setUserId(rs.getString("user_id"));
+                user.setUserName(rs.getString("user_name"));
+                return user;
             }
         });
     }
