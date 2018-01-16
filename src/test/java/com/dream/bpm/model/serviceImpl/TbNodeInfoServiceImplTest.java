@@ -48,7 +48,7 @@ public class TbNodeInfoServiceImplTest {
 
     @Test
     public void getUserBySQL(){
-        tbNodeInfoService.getUserBySQL("");
+        tbNodeInfoService.getUserBySQL("","");
     }
 
 }

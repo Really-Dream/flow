@@ -60,6 +60,7 @@ public class TbNodeInfoServiceImpl implements TbNodeInfoService{
         return tbNodeInfoDTOS;
     }
 
+    //下一步处理人为SQL，或者单纯一个表达式
     public List<User> getUserBySQL(String SQL,String businessKey){
         List<String> ls=new ArrayList<>();
         Pattern pattern = Pattern.compile("(?<=\\{)(.+?)(?=\\})");
