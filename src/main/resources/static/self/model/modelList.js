@@ -1,5 +1,5 @@
 function editorModel(id){
-    window.open("/modeler.html?modelId="+id);
+    window.open("http://localhost:8080/modeler.html?modelId="+id);
 }
 
 function deploy(id){
