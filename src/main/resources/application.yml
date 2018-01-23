@@ -11,11 +11,9 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-  mvc:
-    view:
-      prefix: /WEB-INF/view/
-      suffix: .jsp
-#  thymeleaf:
-#   cache: false
+  thymeleaf:
+   cache: false
+   content-type: text/html
+   mode: HTML5
 server:
-  port: 8090
+  port: 80

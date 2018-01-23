@@ -4,6 +4,7 @@ import com.dream.basic.manage.dto.TbMenuDTO;
 import com.dream.basic.manage.serviceImpl.TbMenuServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -24,5 +25,11 @@ public class MenuController {
     @ResponseBody
     public List<TbMenuDTO> getMenu(){
         return tbMenuService.getMenu();
+    }
+
+    @RequestMapping("index")
+    public String index(Model model){
+        model.addAttribute("list",tbMenuService.getMenu());
+        return "index";
     }
 }
