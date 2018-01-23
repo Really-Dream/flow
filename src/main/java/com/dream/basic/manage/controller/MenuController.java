@@ -8,7 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Dream
@@ -30,6 +32,9 @@ public class MenuController {
     @RequestMapping("index")
     public String index(Model model){
         model.addAttribute("list",tbMenuService.getMenu());
+        model.addAttribute("s","kkk");
+        Map<String,String> map = new HashMap<>();
+        map.put("s","s");
         return "index";
     }
 }

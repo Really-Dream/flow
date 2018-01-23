@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <title>工作台</title>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
@@ -49,32 +47,27 @@
                 </div>
             </span>
     </div>
-    <script id="nav_tpl" type="text/html">
+
+    <nav>
         <ul>
-            {{foreach nav as bigMenu i}}
-            <li><a href="#{{bigMenu.url}}"><i class="fa fa-lg fa-fw fa-file-text"></i><span>{{bigMenu.t}}</span>{{if bigMenu.child.length >= 1}}<b><i class="fa fa-plus-square-o"></i></b>{{/if}}</a>
-                { bigMenu.child.length >= 1}}
-                <ul>
-                    {{foreach bigMenu.child as medMenu j}}
-                    <li><a href="#{{medMenu.url}}"><i class="fa fa-fw fa-file"></i><span>{{medMenu.t}}</span>{{if medMenu.child.length >= 1}}<b><i class="fa fa-plus-square-o"></i></b>{{/if}}</a>
-                        {{if medMenu.child.length >= 1}}
-                        <ul>
-                            {{foreach medMenu.child as minMenu k}}
-                            <li><a href="#{{minMenu.url}}"><i class="fa fa-fw fa-file"></i><span>{{minMenu.t}}</span></a></li>
-                            {{/foreach}}
+            <p th:each="menu : ${list}">
+                <li th:if="${menu.list != null}" class="close">
+                    <li><a href="#"><i class="fa fa-lg fa-fw fa-file-text"></i><span th:text="${menu.menuName}">表格</span><b><i class="fa fa-minus-square-o"></i></b></a>
+                        <ul style="height: auto; display: block;">
+                            <p th:each="menu2 : ${menu.list}">
+                                <li><a th:href="${menu2.menuAction}"><i class="fa fa-fw fa-file"></i><span th:text="${menu2.menuName}">基本表格</span></a></li>
+                            </p>
                         </ul>
-                        {{/if}}
                     </li>
-                    {{/foreach}}
-                </ul>
-                {{/if}}
-            </li>
-            {{/foreach}}
+                </li>
+                <li th:if="${menu.list == null}">
+                    <a th:href="${menu.menuAction}"><i class="fa fa-lg fa-fw fa-file-text"></i><span th:text="${menu.menuName}">工作台</span></a>
+                </li>
+            </p>
         </ul>
-    <nav></nav>
-    <span class="minifyBtn"><i class="fa fa-arrow-circle-left"></i></span>
-    </script>
+    </nav>
 </aside>
+
 <div id="main">
     <div id="ribbon"><ol class="breadcrumb"></ol></div>
     <div id="content"></div>
@@ -99,17 +92,11 @@
     </div>
 </div>
 
-<script th:src="@{/public/js/vendor/jquery.min.js}"></script>
+<script th:src="@{/self/common/jquery-3.2.1.min.js}"></script>
 <script th:src="@{/public/js/vendor/bootstrap/dist/bootstrap.js}"></script>
 <script th:src="@{/public/js/vendor/catpl.js}"></script>
 <script th:src="@{/public/js/vendor/ie10-viewport-bug-workaround.js}"></script>
 <script th:src="@{/public/js/ajaxForm.js}"></script>
 <script th:src="@{/public/js/basic.js}"></script>
-<script>
-    $(function () {
-        alert(navJSON);
-    })
-//
-</script>
 </body>
 </html>
