@@ -183,12 +183,10 @@ $(window).on('hashchange', function () {
             data.nav = returnData;
             var render = catpl('nav_tpl');
             var html = render(data);
-            console.log(html);
             $nav.html(html);
             invoke_nav();
         },
         error: function () {
-            console.log("SSS");
         }
     });
 

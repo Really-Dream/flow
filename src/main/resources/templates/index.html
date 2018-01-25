@@ -18,8 +18,8 @@
 
     <script>
         window.common_conf = {
-            defaultHash: 'page/desktop.html',
-            baseURL: './',
+            defaultHash: 'bpm/model/list',
+            baseURL: '/',
             navJSON: '/menu/list'
         };
     </script>
@@ -56,10 +56,12 @@
     <span class="minifyBtn"><i class="fa fa-arrow-circle-left"></i></span>
 </aside>
 
+<!--主体内容-->
 <div id="main">
     <div id="ribbon"><ol class="breadcrumb"></ol></div>
     <div id="content"></div>
 </div>
+<!--下脚-->
 <footer id="page_footer">
     <div class="inside"><i class="fa fa-copyright"></i><a href="https://github.com/liyu365">liyu</a></div>
 </footer>
@@ -96,12 +98,12 @@
                     html += "<li><a href='#'><i class='fa fa-lg fa-fw fa-file-text'></i><span>"+menu[j].menuName+"</span><b><i class='fa fa-plus-square-o'></i></b></a>";
                     html += "<ul>";
                     for(var i=0 ; i<menu[j].list.length ; i++){
-                        html+="<li><a href='"+menu[j].list[i].menuAction+"'><i class='fa fa-fw fa-file'></i><span>"+menu[j].list[i].menuName+"</span></a></li>"
+                        html += "<li><a href='javascript:;' onclick=\"loadURL('"+menu[j].list[i].menuAction+"')\" ><i class='fa fa-fw fa-file'></i><span>"+menu[j].list[i].menuName+"</span></a></li>"
                     }
                     html += "</ul>";
                     html += "</li>";
                 }else{
-                    html += "<li><a href='"+menu[j].menuAction+"'><i class='fa fa-lg fa-fw fa-file-text'></i><span>"+menu[j].menuName+"</span></a></li>";
+                    html += "<li><a href='javascript:;' onclick=\"loadURL('"+menu[j].menuAction+"')\"><i class='fa fa-lg fa-fw fa-file-text'></i><span>"+menu[j].menuName+"</span></a></li>";
                 }
             }
         }

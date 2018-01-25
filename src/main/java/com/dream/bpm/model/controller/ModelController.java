@@ -31,23 +31,14 @@ public class ModelController {
     @Autowired
     Gson gson;
 
-
-    /**
-     * 首页
-     */
-    @RequestMapping("index")
-    public String index(){
-        return "index";
-    }
-
     /**
      * model列表
      */
     @RequestMapping("/list")
-    @ResponseBody
-    public Map list(){
+    public String list(org.springframework.ui.Model model){
         List<Model> list = repositoryService.createModelQuery().orderByCreateTime().desc().list();
-        return Convert2Page.getPage(list,list.size());
+        model.addAttribute("list",list);
+        return "table";
     }
 
     /**
