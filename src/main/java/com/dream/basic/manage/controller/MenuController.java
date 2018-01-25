@@ -37,4 +37,9 @@ public class MenuController {
         map.put("s","s");
         return "index";
     }
+
+    @RequestMapping("table")
+    public String table(){
+        return "table";
+    }
 }

@@ -20,7 +20,7 @@
         window.common_conf = {
             defaultHash: 'page/desktop.html',
             baseURL: './',
-            navJSON: '/public/nav.json'
+            navJSON: '/menu/list'
         };
     </script>
 </head>
@@ -48,24 +48,12 @@
             </span>
     </div>
 
-    <nav>
-        <ul>
-            <p th:each="menu : ${list}">
-                <li th:if="${menu.list != null}" class="close">
-                    <li><a href="#"><i class="fa fa-lg fa-fw fa-file-text"></i><span th:text="${menu.menuName}">表格</span><b><i class="fa fa-minus-square-o"></i></b></a>
-                        <ul style="height: auto; display: block;">
-                            <p th:each="menu2 : ${menu.list}">
-                                <li><a th:href="${menu2.menuAction}"><i class="fa fa-fw fa-file"></i><span th:text="${menu2.menuName}">基本表格</span></a></li>
-                            </p>
-                        </ul>
-                    </li>
-                </li>
-                <li th:if="${menu.list == null}">
-                    <a th:href="${menu.menuAction}"><i class="fa fa-lg fa-fw fa-file-text"></i><span th:text="${menu.menuName}">工作台</span></a>
-                </li>
-            </p>
-        </ul>
-    </nav>
+    <!--菜单内容-->
+    <script id="nav_tpl" type="text/html"></script>
+
+    <nav></nav>
+
+    <span class="minifyBtn"><i class="fa fa-arrow-circle-left"></i></span>
 </aside>
 
 <div id="main">
@@ -98,5 +86,30 @@
 <script th:src="@{/public/js/vendor/ie10-viewport-bug-workaround.js}"></script>
 <script th:src="@{/public/js/ajaxForm.js}"></script>
 <script th:src="@{/public/js/basic.js}"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+        var html = "<ul>";
+        var menu = [[${list}]];
+        if(menu.length>0){
+            for(var j=0 ; j<menu.length ; j++){
+                if(menu[j].list != undefined){
+                    html += "<li><a href='#'><i class='fa fa-lg fa-fw fa-file-text'></i><span>"+menu[j].menuName+"</span><b><i class='fa fa-plus-square-o'></i></b></a>";
+                    html += "<ul>";
+                    for(var i=0 ; i<menu[j].list.length ; i++){
+                        html+="<li><a href='"+menu[j].list[i].menuAction+"'><i class='fa fa-fw fa-file'></i><span>"+menu[j].list[i].menuName+"</span></a></li>"
+                    }
+                    html += "</ul>";
+                    html += "</li>";
+                }else{
+                    html += "<li><a href='"+menu[j].menuAction+"'><i class='fa fa-lg fa-fw fa-file-text'></i><span>"+menu[j].menuName+"</span></a></li>";
+                }
+            }
+        }
+        html += "</ul>"
+    $("#nav_tpl").html(html)
+    /*]]>*/
+</script>
+
+
 </body>
 </html>
