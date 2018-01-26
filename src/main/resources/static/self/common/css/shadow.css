@@ -1,0 +1,13 @@
+.shadow-mark {
+    width: 100%;
+    min-height: 1000px;
+    background-color: #333;
+    background-attachment: scroll;
+    opacity: .5;/* 支持CSS3的浏览器（FF 1.5也支持）*/
+    filter: alpha(opacity=50); /* IE */
+    -moz-opacity: .5;/* Moz + FF */
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 2000;
+}

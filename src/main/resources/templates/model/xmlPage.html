@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/public/css/vendor/bootstrap/dist/bootstrap.css}"/>
+    <script th:src="@{/self/common/jquery-3.2.1.min.js}"></script>
+    <title th:text="${name}">XML</title>
+</head>
+
+<body >
+<div style="width: 99%;height: 99%;position:absolute;">
+    <div style="width: 99%;height: 85%;">
+        <textarea id="bpmnXML" th:text="${xml}" style="width: 99%;height: 95%;resize: none;margin: 10px"></textarea>
+    </div>
+    <div style="margin-left: 10px">
+        <button class="btn btn-primary" type="button" onclick="submit()">提交</button>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function submit(){
+        var bpmnXML = $("#bpmnXML").val();
+        var modelId = [[${modelId}]];
+        if(modelId == "error" || modelId == "" || modelId == undefined){
+            return;
+        }else{
+            $.ajax({
+                type: "post",
+                url: "/bpm/model/saveModelXML",
+                data: {
+                    modelId : modelId,
+                    bpmnXML : bpmnXML
+                },
+                dataType: "json",
+                async: false,
+                success: function(data){
+                    alert(data);
+                    window.location.href = "/bpm/model/getBpmnXML?modelId="+modelId;
+                },
+                error:function (data) {
+                    alert(data);
+                }
+            });
+        }
+    }
+    /*]]>*/
+</script>
+
+</body>
+</html>

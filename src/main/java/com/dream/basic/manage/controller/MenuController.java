@@ -32,9 +32,6 @@ public class MenuController {
     @RequestMapping("index")
     public String index(Model model){
         model.addAttribute("list",tbMenuService.getMenu());
-        model.addAttribute("s","kkk");
-        Map<String,String> map = new HashMap<>();
-        map.put("s","s");
         return "index";
     }
 
