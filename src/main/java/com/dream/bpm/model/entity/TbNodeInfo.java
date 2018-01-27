@@ -14,7 +14,7 @@ import javax.persistence.Id;
 public class TbNodeInfo {
 
     /**
-     * 节点操作项ID
+     * ID
      */
     @Id
     private String operationId;
@@ -44,5 +44,10 @@ public class TbNodeInfo {
      * 0无 1单人 2多人
      */
     private String userType;
+
+    /**
+     * 操作项ID
+     */
+    private String operationKey;
 
 }

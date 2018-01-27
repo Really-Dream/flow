@@ -89,6 +89,11 @@ AjaxForm.prototype.defaultCallBack = function (returnData) {
                             window.location = returnData.referer;
                             return true;
                         }
+                        //绝对地址
+                        if(returnData.referer.indexOf("/") == 0){
+                            window.location = window.location.href;
+                            return true;
+                        }
                         //如果是弹出框中的表单，需要等弹出框关闭后才能进行跳转；否则直接跳转
                         if (_this.$form.parent().hasClass('modal-content')) {
                             $modals.on('hidden.bs.modal', function () {

@@ -1,7 +1,7 @@
 package com.dream.bpm.model.controller;
 
 import com.dream.bpm.model.serviceImpl.ModelService;
-import com.dream.util.Convert2Page;
+import com.dream.util.ReturnJson;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -28,7 +28,6 @@ import javax.xml.stream.XMLStreamReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Dream
@@ -85,9 +84,9 @@ public class ModelController {
             repositoryService.deleteModel(modelId);
         }catch (Exception e){
             e.printStackTrace();
-            return gson.toJson("删除失败！");
+            return gson.toJson(ReturnJson.ERROR());
         }
-        return gson.toJson("删除成功！");
+        return gson.toJson(ReturnJson.SUCCESS());
     }
 
     /**
@@ -97,7 +96,8 @@ public class ModelController {
      * @param description   描述
      */
     @RequestMapping("createModel")
-    public void createModel(String modelName, String modelKey, String description, HttpServletRequest request, HttpServletResponse response){
+    @ResponseBody
+    public String createModel(String modelName, String modelKey, String description, HttpServletRequest request, HttpServletResponse response){
         try {
             ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
 
@@ -123,9 +123,11 @@ public class ModelController {
             //保存模型
             repositoryService.saveModel(modelData);
             repositoryService.addModelEditorSource(modelData.getId(), editorNode.toString().getBytes("utf-8"));
-            response.sendRedirect(request.getContextPath() + "/modeler.html?modelId=" + modelData.getId());
+//            response.sendRedirect(request.getContextPath() + "/modeler.html?modelId=" + modelData.getId());
+            return gson.toJson(ReturnJson.SUCCESS());
         } catch (Exception e) {
             System.out.println("创建模型失败：");
+            return gson.toJson(ReturnJson.ERROR());
         }
     }
 

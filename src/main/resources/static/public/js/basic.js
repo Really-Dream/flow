@@ -7,7 +7,11 @@ function checkURL() {
     if (hash !== '') {
         loadURL(hash);
     } else {
-        loadURL(common_conf.defaultHash);
+        try{
+            loadURL(common_conf.defaultHash);
+        }catch(e){
+            console.log(e.message);
+        }
     }
 }
 function loadURL(url) {
@@ -169,26 +173,33 @@ $(window).on('hashchange', function () {
         });
     };
 
-    $.ajax({
-        type: 'get',
-        url: common_conf.navJSON,
-        cache: false,
-        data: '',
-        dataType: 'json',
-        beforeSend: function () {
+    try{
+        var url=common_conf.navJSON;
+    }catch (e){
+    }
 
-        },
-        success: function (returnData) {
-            var data = {};
-            data.nav = returnData;
-            var render = catpl('nav_tpl');
-            var html = render(data);
-            $nav.html(html);
-            invoke_nav();
-        },
-        error: function () {
-        }
-    });
+    if(url != undefined && url.length > 0 ){
+        $.ajax({
+            type: 'get',
+            url: url,
+            cache: false,
+            data: '',
+            dataType: 'json',
+            beforeSend: function () {
+
+            },
+            success: function (returnData) {
+                var data = {};
+                data.nav = returnData;
+                var render = catpl('nav_tpl');
+                var html = render(data);
+                $nav.html(html);
+                invoke_nav();
+            },
+            error: function () {
+            }
+        });
+    }
 
     //导航下面的收起按钮
     var $minifyBtn = $('#left_panel .minifyBtn');
@@ -282,8 +293,14 @@ $(window).on('hashchange', function () {
                         $modals.on('hidden.bs.modal', function () {
                             $modals.off('hidden.bs.modal');
                             //如果为绝对地址则跳转出后台中心
+                                console.log(returnData.referer);
                             if (/^(http|https).+$/.test(returnData.referer)) {
                                 window.location = returnData.referer;
+                                return true;
+                            }
+                            //绝对地址
+                            if(returnData.referer.indexOf("/") == 0){
+                                window.location = window.location.href;
                                 return true;
                             }
                             if ($.trim(returnData.referer)) {

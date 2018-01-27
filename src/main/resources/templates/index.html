@@ -84,7 +84,8 @@
     </div>
 </div>
 
-<script th:src="@{/self/common/jquery-3.2.1.min.js}"></script>
+<!--<script th:src="@{/self/common/jquery-3.2.1.min.js}"></script>-->
+<script th:src="@{/public/js/vendor/jquery.min.js}"></script>
 <script th:src="@{/public/js/vendor/bootstrap/dist/bootstrap.js}"></script>
 <script th:src="@{/public/js/vendor/catpl.js}"></script>
 <script th:src="@{/public/js/vendor/ie10-viewport-bug-workaround.js}"></script>
@@ -100,12 +101,12 @@
                     html += "<li><a href='#'><i class='fa fa-lg fa-fw fa-file-text'></i><span>"+menu[j].menuName+"</span><b><i class='fa fa-plus-square-o'></i></b></a>";
                     html += "<ul>";
                     for(var i=0 ; i<menu[j].list.length ; i++){
-                        html += "<li><a href='javascript:;' onclick=\"loadURL('"+menu[j].list[i].menuAction+"')\" ><i class='fa fa-fw fa-file'></i><span>"+menu[j].list[i].menuName+"</span></a></li>"
+                        html += "<li><a href='"+menu[j].list[i].menuAction+"' ><i class='fa fa-fw fa-file'></i><span>"+menu[j].list[i].menuName+"</span></a></li>"
                     }
                     html += "</ul>";
                     html += "</li>";
                 }else{
-                    html += "<li><a href='javascript:;' onclick=\"loadURL('"+menu[j].menuAction+"')\"><i class='fa fa-lg fa-fw fa-file-text'></i><span>"+menu[j].menuName+"</span></a></li>";
+                    html += "<li><a href='"+menu[j].menuAction+"' ><i class='fa fa-lg fa-fw fa-file-text'></i><span>"+menu[j].menuName+"</span></a></li>";
                 }
             }
         }

@@ -3,12 +3,13 @@ package com.dream.bpm.model.controller;
 import com.dream.bpm.model.entity.TbNode;
 import com.dream.bpm.model.serviceImpl.DeployedService;
 import com.dream.bpm.model.serviceImpl.TbNodeServiceImpl;
-import com.dream.util.Convert2Page;
+import com.dream.util.ReturnJson;
 import com.google.gson.Gson;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -37,9 +38,11 @@ public class DeployedController {
     @Autowired
     Gson gson;
 
-    @RequestMapping("list")
-    @ResponseBody
-    public Map list(){
+    /**
+     * 已部署模型列表
+     */
+    @RequestMapping("index")
+    public String index(Model model){
         List<Map<String,String>> listS = new ArrayList<>();
         List<ProcessDefinition> list = repositoryService.createProcessDefinitionQuery().orderByProcessDefinitionKey().asc().list();
         for(ProcessDefinition processDefinition : list){
@@ -49,35 +52,36 @@ public class DeployedController {
             map.put("deploymentId",processDefinition.getDeploymentId());
             listS.add(map);
         }
-        return Convert2Page.getPage(listS,listS.size());
+        model.addAttribute("list",listS);
+        return "model/deployed";
     }
 
+    /**
+     * 删除已部署模型
+     * @param deploymentId 模型部署ID
+     * @param procDefId 流程定义ID
+     */
     @RequestMapping("delete")
     @ResponseBody
     public String delete(String deploymentId,String procDefId){
         try{
             deployedService.delete(deploymentId,procDefId);
-            return gson.toJson("删除成功");
+            return gson.toJson(ReturnJson.SUCCESS());
         }catch (Exception e){
             e.printStackTrace();
-            return gson.toJson("删除失败");
+            return gson.toJson(ReturnJson.ERROR());
         }
     }
 
-    @RequestMapping("index")
-    public String index(){
-        return "model/deployedList";
-    }
-
-    @RequestMapping("nodeList")
-    @ResponseBody
-    public Map nodeList(String procDefId){
-        List<TbNode> list = tbNodeService.findAllByProcDefId(procDefId);
-        return Convert2Page.getPage(list,list.size());
-    }
-
+    /**
+     * 已部署模型的节点列表
+     * @param procDefId 流程定义ID
+     */
     @RequestMapping("nodeIndex")
-    public String nodeIndex(){
-        return "model/nodeEdit";
+    public String nodeIndex(String procDefId,Model model){
+        List<TbNode> list = tbNodeService.findAllByProcDefId(procDefId);
+        model.addAttribute("list",list);
+        model.addAttribute("procDefId",procDefId);
+        return "model/nodeList";
     }
 }

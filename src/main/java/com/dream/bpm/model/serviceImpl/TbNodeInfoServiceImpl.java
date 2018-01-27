@@ -42,6 +42,11 @@ public class TbNodeInfoServiceImpl implements TbNodeInfoService{
     }
 
     @Override
+    public void delete(String operationId){
+        repository.delete(operationId);
+    }
+
+    @Override
     public List<TbNodeInfoDTO> findTbNodeInfoDTOList(String procDefId, String taskDefKey,String businessKey) {
         List<TbNodeInfo> tbNodeInfos = this.findAllByProcDefIdAndAndTaskDefKey(procDefId,taskDefKey);
         List<TbNodeInfoDTO> tbNodeInfoDTOS = new ArrayList<>();

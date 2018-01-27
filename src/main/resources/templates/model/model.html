@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <head th:insert="~{/common/head :: header}" />
     <link rel="stylesheet" th:href="@{/public/js/vendor/DataTables/css/dataTables.bootstrap.css}"/>
 
     <script th:src="@{/public/js/vendor/DataTables/js/jquery.dataTables.min.js}"></script>
@@ -65,14 +64,15 @@
                         </div>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary J_ajaxSubmitBtn">提交</button>
+                </div>
             </form>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" onclick="submit()">提交</button>
-            </div>
         </div>
     </div>
 </div>
+
 
 <script th:inline="javascript">
     /*<![CDATA[*/
@@ -133,9 +133,6 @@
         return true;
     }
 
-    function submit(){
-
-    }
 </script>
 
 </body>

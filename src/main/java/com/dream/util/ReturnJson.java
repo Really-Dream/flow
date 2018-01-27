@@ -10,9 +10,17 @@ import java.util.Map;
 public class ReturnJson {
 
     public static Map<String,Object> SUCCESS(){
+        return SUCCESS("");
+    }
+
+    public static Map<String,Object> SUCCESS(String referer){
+        return SUCCESS("提交成功",referer);
+    }
+
+    public static Map<String,Object> SUCCESS(String message,String referer){
         Map<String,Object> map = new HashMap<>();
-        map.put("message","提交成功");
-        map.put("referer","");
+        map.put("message",message);
+        map.put("referer",referer);
         map.put("refresh",true);
         map.put("state","success");
         return map;
@@ -26,4 +34,5 @@ public class ReturnJson {
         map.put("state","error");
         return map;
     }
+
 }

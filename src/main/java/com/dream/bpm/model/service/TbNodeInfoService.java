@@ -16,4 +16,7 @@ public interface TbNodeInfoService {
     void save(TbNodeInfo tbNodeInfo);
 
     List<TbNodeInfoDTO> findTbNodeInfoDTOList(String procDefId,String taskDefKey,String businessKey);
+
+    void delete(String operationId);
+
 }
