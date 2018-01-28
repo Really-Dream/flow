@@ -19,4 +19,7 @@ public interface TbNodeInfoService {
 
     void delete(String operationId);
 
+    TbNodeInfo findTbNodeInfoByOperationId(String operation);
+
+    void update(TbNodeInfo tbNodeInfo);
 }

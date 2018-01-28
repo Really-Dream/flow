@@ -44,28 +44,14 @@ public class TbNodeInfoController {
 
     /**
      * 新增操作项
-     * @param operationKey 操作项ID
-     * @param operationName 操作项名称
-     * @param operationSql  操作项SQL
-     * @param userType  选人模式
-     * @param procDefId 流程定义ID
-     * @param taskDefKey 任务节点定义KEY
-     * @return
      */
     @RequestMapping("create")
     @ResponseBody
-    public String create(String operationKey,String operationName,String operationSql,String userType,String procDefId,String taskDefKey){
+    public String create(TbNodeInfo tbNodeInfo){
         try{
-            TbNodeInfo tbNodeInfo = new TbNodeInfo();
             tbNodeInfo.setOperationId(KeyUtil.getUniqueKey());
-            tbNodeInfo.setOperationKey(operationKey);
-            tbNodeInfo.setOperationName(operationName);
-            tbNodeInfo.setOperationSql(operationSql);
-            tbNodeInfo.setUserType(userType);
-            tbNodeInfo.setProcDefId(procDefId);
-            tbNodeInfo.setTaskDefKey(taskDefKey);
             nodeInfoService.save(tbNodeInfo);
-            return gson.toJson(ReturnJson.SUCCESS("/bpm/tbNodeInfo/index?procDefId="+procDefId+"&taskDefKey="+taskDefKey));
+            return gson.toJson(ReturnJson.SUCCESS("/bpm/tbNodeInfo/index?procDefId="+tbNodeInfo.getProcDefId()+"&taskDefKey="+tbNodeInfo.getTaskDefKey()));
         }catch (Exception e){
             e.printStackTrace();
             return gson.toJson(ReturnJson.ERROR());
@@ -89,6 +75,33 @@ public class TbNodeInfoController {
     }
 
     /**
+     * 修改的输入框
+     * @param operationId 操作项ID
+     */
+    @RequestMapping("edit")
+    public String edit(String operationId,Model model){
+        TbNodeInfo tbNodeInfo = nodeInfoService.findTbNodeInfoByOperationId(operationId);
+        model.addAttribute("tbNodeInfo",tbNodeInfo);
+        return "model/nodeInfoModal";
+    }
+
+    /**
+     * 保存修改之后的内容
+     * @param tbNodeInfo 操作项实体类
+     */
+    @RequestMapping("saveEdit")
+    @ResponseBody
+    public String saveEdit(TbNodeInfo tbNodeInfo){
+        try{
+            nodeInfoService.update(tbNodeInfo);
+            return gson.toJson(ReturnJson.SUCCESS("/"));
+        }catch(Exception e){
+            e.printStackTrace();
+            return gson.toJson(ReturnJson.ERROR());
+        }
+    }
+
+    /**
      * 获取操作区的内容：操作项，下一步处理人
      * @param procDefId 流程定义ID
      * @param taskDefKey    任务定义ID
@@ -99,5 +112,7 @@ public class TbNodeInfoController {
     public List<TbNodeInfoDTO> getOperations(String procDefId, String taskDefKey,String businessKey){
         return nodeInfoService.findTbNodeInfoDTOList(procDefId,taskDefKey,businessKey);
     }
+
+
 
 }

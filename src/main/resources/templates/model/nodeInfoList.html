@@ -44,12 +44,15 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title" id="myModalLabel">新增操作项</h4>
             </div>
-            <form class="form-horizontal J_ajaxForm" role="form" method="post" th:action="${'/bpm/tbNodeInfo/create?taskDefKey='+ taskDefKey +'&procDefId=' + procDefId+'&'}"  data-validate="validate">
+            <form class="form-horizontal J_ajaxForm" role="form" method="post" th:action="${'/bpm/tbNodeInfo/create'}"  data-validate="validate">
                 <div class="modal-body">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">操作项名称</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" placeholder="必填" name="operationName">
+                            <input type="text" hidden name="operationId">
+                            <input type="text" hidden th:value="${taskDefKey}"  name="taskDefKey">
+                            <input type="text" hidden th:value="${procDefId}"  name="procDefId">
                         </div>
                     </div>
                     <div class="form-group">
@@ -102,9 +105,14 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal_ajax_content" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog"><div class="modal-content"></div></div>
+</div>
+
 <script th:inline="javascript">
     var KEY = new Array();
     var NAME = new Array();
+    var ID = new Array();
     /*<![CDATA[*/
     var html =
         "<thead>" +
@@ -121,6 +129,7 @@
     for(var i=0; i<list.length ; i++){
         KEY.push(list[i].operationKey);
         NAME.push(list[i].operationName);
+        ID.push(list[i].operationId);
         html += "<tr>";
         html += "<td>"+list[i].operationKey+"</td>";
         html += "<td>"+list[i].operationName+"</td>";
@@ -133,7 +142,7 @@
             html += "<td>多选</td>";
         }
         html += "<td>" +
-            "<button type=\"button\" class=\"btn btn-primary \" style='height: 30px' onclick=\"window.open('/bpm/deployed/nodeIndex?procDefId="+list[i].operationId+"');\">修改</button>&nbsp;" +
+            "<button type=\"button\" class=\"btn btn-primary J_ajax_content_modal\" style='height: 30px' data-href='/bpm/tbNodeInfo/edit?operationId="+list[i].operationId+"';\">修改</button>&nbsp;" +
             "<button type=\"button\" class=\"btn btn-primary J_confirm_modal\" data-tip='一定要删除？' style='height: 30px' data-target='/bpm/tbNodeInfo/delete?operationId="+list[i].operationId+"'>删除</button>&nbsp;" +
             "</td></tr>";
     }
@@ -153,6 +162,7 @@
         var operationName = $form.find('input[name="operationName"]');
         var operationKey = $form.find('input[name="operationKey"]');
         var operationSql = $form.find('textarea[name="operationSql"]');
+        var operationId = $form.find('input[name="operationId"]');
         if ($.trim(operationName.val()) == '') {
             return '操作项名称不能为空';
         }
@@ -162,10 +172,10 @@
         if (userType != '0' && $.trim(operationSql.val()) == '') {
             return '处理人SQL不能为空';
         }
-        if(KEY.indexOf($.trim(operationKey.val()))>=0){
+        if(KEY.indexOf($.trim(operationKey.val()))>=0 && ID.indexOf($.trim(operationId.val())) != KEY.indexOf($.trim(operationKey.val()))){
             return '操作项ID不能重复';
         }
-        if(NAME.indexOf($.trim(operationName.val()))>=0){
+        if(NAME.indexOf($.trim(operationName.val()))>=0 && ID.indexOf($.trim(operationId.val())) != KEY.indexOf($.trim(operationKey.val()))){
             return '操作项名称不能重复';
         }
         return true;

@@ -12,6 +12,9 @@ import java.util.List;
 public interface TbNodeInfoRepository extends JpaRepository<TbNodeInfo,String>{
 
     List<TbNodeInfo> findAllByProcDefIdAndAndTaskDefKey(String procDefId,String taskDefKey);
+
+    TbNodeInfo findTbNodeInfoByOperationId(String operationId);
+
 }
 
 

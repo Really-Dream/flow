@@ -47,6 +47,16 @@ public class TbNodeInfoServiceImpl implements TbNodeInfoService{
     }
 
     @Override
+    public TbNodeInfo findTbNodeInfoByOperationId(String operationId){
+        return repository.findTbNodeInfoByOperationId(operationId);
+    }
+
+    @Override
+    public void update(TbNodeInfo tbNodeInfo){
+        repository.save(tbNodeInfo);
+    }
+
+    @Override
     public List<TbNodeInfoDTO> findTbNodeInfoDTOList(String procDefId, String taskDefKey,String businessKey) {
         List<TbNodeInfo> tbNodeInfos = this.findAllByProcDefIdAndAndTaskDefKey(procDefId,taskDefKey);
         List<TbNodeInfoDTO> tbNodeInfoDTOS = new ArrayList<>();
