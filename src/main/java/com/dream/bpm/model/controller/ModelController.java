@@ -223,9 +223,4 @@ public class ModelController {
         }
     }
 
-    @RequestMapping("xmlPage")
-    public String xmlPage(){
-        return "model/xmlPage";
-    }
-
 }
