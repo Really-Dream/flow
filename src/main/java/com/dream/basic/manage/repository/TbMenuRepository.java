@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface TbMenuRepository extends JpaRepository<TbMenu,String>{
 
-    List<TbMenu> findAllByMenuLevelOrderByMenuOrderDesc(String level);
+    List<TbMenu> findAllByMenuLevelOrderByMenuOrderAsc(String level);
     void deleteById(String id);
     void deleteAllByParentId(String parentId);
 }

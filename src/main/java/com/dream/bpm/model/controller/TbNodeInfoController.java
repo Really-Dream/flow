@@ -17,6 +17,7 @@ import java.util.List;
 /**
  * Created By Dream
  * 2017/12/24 2:04
+ * 已部署模型的节点相关信息
  */
 @Controller
 @RequestMapping("/bpm/tbNodeInfo")

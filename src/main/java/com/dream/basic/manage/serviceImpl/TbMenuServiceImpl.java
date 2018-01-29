@@ -36,7 +36,7 @@ public class TbMenuServiceImpl implements TbMenuService{
 
     @Override
     public List<TbMenu> findAllByMenuLevel(String level) {
-        List<TbMenu> list = repository.findAllByMenuLevelOrderByMenuOrderDesc(level);
+        List<TbMenu> list = repository.findAllByMenuLevelOrderByMenuOrderAsc(level);
         return list;
     }
 
