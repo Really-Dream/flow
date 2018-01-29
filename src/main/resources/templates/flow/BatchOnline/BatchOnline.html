@@ -6,51 +6,53 @@
     <head th:insert="~{/common/head :: header}" />
 </head>
 <body>
-<div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-    <h4 class="modal-title" id="myModalLabel">修改操作项</h4>
-</div>
-<form class="form-horizontal J_ajaxForm" role="form" method="post" action='/bpm/tbNodeInfo/saveEdit'  data-validate="validate">
-    <div class="modal-body">
-        <div class="form-group">
-            <label class="col-sm-3 control-label">操作项名称</label>
-            <div class="col-sm-9">
-                <input type="text" class="form-control" placeholder="必填" name="operationName">
+    <div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">修改操作项</h4>
+    </div>
+    <form class="form-horizontal J_ajaxForm" role="form" method="post" action='/bpm/tbNodeInfo/saveEdit'  data-validate="validate">
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">操作项名称</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" placeholder="必填" name="operationName">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label">操作项ID</label>
-            <div class="col-sm-9">
-                <input type="text"  class="form-control" placeholder="必填" name="operationKey">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">操作项ID</label>
+                <div class="col-sm-9">
+                    <input type="text"  class="form-control" placeholder="必填" name="operationKey">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label">处理人SQL</label>
-            <div class="col-sm-9">
-                <textarea class="form-control" placeholder="选人模式为'不选'时非必填，否则必填" name="operationSql"></textarea>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">处理人SQL</label>
+                <div class="col-sm-9">
+                    <textarea class="form-control" placeholder="选人模式为'不选'时非必填，否则必填" name="operationSql"></textarea>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label">选人模式</label>
-            <div class="col-sm-9">
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="userType" value="0">不选
-                    </label>
-                    <label>
-                        <input type="radio" name="userType" value="1">单选
-                    </label>
-                    <label>
-                        <input type="radio" name="userType" value="2">多选
-                    </label>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">选人模式</label>
+                <div class="col-sm-9">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="userType" value="0">不选
+                        </label>
+                        <label>
+                            <input type="radio" name="userType" value="1">单选
+                        </label>
+                        <label>
+                            <input type="radio" name="userType" value="2">多选
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary J_ajaxSubmitBtn">提交</button>
+        </div>
+    </form>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary J_ajaxSubmitBtn">提交</button>
-    </div>
-</form>
 </body>
 </html>
