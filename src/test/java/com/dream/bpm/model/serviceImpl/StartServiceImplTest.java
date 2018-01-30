@@ -1,5 +1,6 @@
 package com.dream.bpm.model.serviceImpl;
 
+import com.dream.util.KeyUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by Dream
@@ -20,13 +19,13 @@ import static org.junit.Assert.*;
 public class StartServiceImplTest {
 
     @Autowired
-    StartServiceImpl startService;
+    FlowServiceImpl startService;
 
     @Test
     public void startProcess() throws Exception {
         Map<String,Object> map = new HashMap<>();
         map.put("createUser","lisi");
-        startService.startProcess("BatchOnline",map);
+        startService.startProcess("BatchOnline", KeyUtil.getUniqueKey(),map);
     }
 
     @Test

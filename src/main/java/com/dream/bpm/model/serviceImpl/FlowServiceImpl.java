@@ -15,7 +15,7 @@ import java.util.Map;
  * 2018/1/16.
  */
 @Service
-public class StartServiceImpl {
+public class FlowServiceImpl {
 
     @Autowired
     private RuntimeService runtimeService;
@@ -26,10 +26,11 @@ public class StartServiceImpl {
     @Autowired
     private TaskService taskService;
 
-    public String startProcess(String proDefKey,Map<String,Object> map){
-        //根据流程定义Key部署最新的流程
+    public String startProcess(String proDefKey,String businessKey,Map<String,Object> map){
+        //设置流程启动人
         identityService.setAuthenticatedUserId("zhangsan");
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(proDefKey, KeyUtil.getUniqueKey(),map);
+        //根据流程定义Key部署最新的流程
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(proDefKey,businessKey,map);
         return processInstance.getProcessInstanceId();
     }
 
