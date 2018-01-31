@@ -31,7 +31,7 @@
 <header id="page_header">
     <div class="logow animated fadeInLeft"><a href="#"><img th:src="@{/public/images/dreamlogo.png}" width="110"/></a></div>
     <div class="right_side">
-        <span class="logout_btn J_confirm_modal" data-target="../server/logout.json" data-tip="确认退出吗？"><i class="fa fa-sign-out"></i></span>
+        <span class="logout_btn J_confirm_modal" data-target="../server/logout.json" data-tip="确认ss退出吗？"><i class="fa fa-sign-out"></i></span>
         <span class="toggleMenu_btn"><i class="fa fa-bars"></i></span>
     </div>
 </header>
@@ -40,11 +40,11 @@
             <span>
                 <div>
                     <a href="#" data-toggle="dropdown">
-                        <i class="fa fa-user"></i><span class="name">admin</span><span class="caret"></span>
+                        <i class="fa fa-user"></i><span class="name" th:text="${#httpServletRequest.remoteUser}">admin</span><span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a tabindex="-1" href="#">个人资料</a></li>
-                        <li><a tabindex="-1" href="#" class="J_confirm_modal" data-target="../server/logout.json" data-tip="确认退出吗？">退出</a></li>
+                        <li><a tabindex="-1" href="#" class="J_confirm_modal" data-target="/menu/logout" data-tip="确认退出吗？">退出</a></li>
                     </ul>
                 </div>
             </span>
@@ -65,7 +65,7 @@
 </div>
 <!--下脚-->
 <footer id="page_footer">
-    <div class="inside"><i class="fa fa-copyright"></i><a href="https://github.com/liyu365">liyu</a></div>
+    <div class="inside"><i class="fa fa-copyright"></i><a href="https://github.com/Really-Dream/flow">Dream</a></div>
 </footer>
 
 <!--Common Modal -->
@@ -113,6 +113,14 @@
         html += "</ul>";
     $("#nav_tpl").html(html);
     /*]]>*/
+
+    function logout(){
+        $.ajax({
+            type: "POST",
+            url: "/logout",
+            async:true
+        });
+    }
 </script>
 
 
