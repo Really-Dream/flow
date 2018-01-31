@@ -9,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -55,17 +54,17 @@ public class MenuController {
         return "login";
     }
 
+    /**
+     * 退出
+     */
     @RequestMapping("logout")
     @ResponseBody
-    public String logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+    public String logout(HttpServletRequest request)
     {
-        Assert.notNull(request, "HttpServletRequest required");
-//        if (this.invalidateHttpSession) {
-            HttpSession session = request.getSession(false);
-            if (session != null) {
-                session.invalidate(); //使当前会话失效
-            }
-//        }
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate(); //使当前会话失效
+        }
 
         SecurityContextHolder.clearContext(); //清空安全上下文
         return gson.toJson(ReturnJson.SUCCESS("/"));
