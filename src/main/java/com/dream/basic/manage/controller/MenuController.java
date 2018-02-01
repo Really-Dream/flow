@@ -4,8 +4,11 @@ import com.dream.basic.manage.dto.TbMenuDTO;
 import com.dream.basic.manage.serviceImpl.TbMenuServiceImpl;
 import com.dream.util.ReturnJson;
 import com.google.gson.Gson;
+import org.activiti.engine.IdentityService;
+import org.activiti.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +30,9 @@ public class MenuController {
     TbMenuServiceImpl tbMenuService;
 
     @Autowired
+    IdentityService identityService;
+
+    @Autowired
     Gson gson;
 
     @RequestMapping("list")
@@ -41,6 +47,10 @@ public class MenuController {
     @RequestMapping("index")
     public String index(Model model){
         model.addAttribute("list",tbMenuService.getMenu());
+        //获取当前登录用户
+        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = identityService.createUserQuery().userId(userDetails.getUsername()).singleResult();
+        model.addAttribute("user",user);
         return "index";
     }
 

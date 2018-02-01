@@ -31,7 +31,7 @@
 <header id="page_header">
     <div class="logow animated fadeInLeft"><a href="#"><img th:src="@{/public/images/dreamlogo.png}" width="110"/></a></div>
     <div class="right_side">
-        <span class="logout_btn J_confirm_modal" data-target="../server/logout.json" data-tip="确认ss退出吗？"><i class="fa fa-sign-out"></i></span>
+        <span class="logout_btn J_confirm_modal" data-target="/menu/logout" data-tip="确认退出吗？"><i class="fa fa-sign-out"></i></span>
         <span class="toggleMenu_btn"><i class="fa fa-bars"></i></span>
     </div>
 </header>
@@ -40,7 +40,7 @@
             <span>
                 <div>
                     <a href="#" data-toggle="dropdown">
-                        <i class="fa fa-user"></i><span class="name" th:text="${#httpServletRequest.remoteUser}">admin</span><span class="caret"></span>
+                        <i class="fa fa-user"></i><span class="name" th:text="${user.LastName + user.FirstName + '('+#httpServletRequest.remoteUser+')'}">admin</span><span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a tabindex="-1" href="#">个人资料</a></li>

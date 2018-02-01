@@ -1,4 +1,4 @@
-package com.dream;
+package com.dream.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +17,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)//开启security注解
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    AnyUserDetailsService anyUserDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -51,5 +54,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity webSecurity) throws Exception{
         //解决静态资源拦截问题
         webSecurity.ignoring().antMatchers("/public/**","/self/**");
+    }
+
+    //添加自定义登录校验
+    @Override
+    public void configure(AuthenticationManagerBuilder builder) throws Exception{
+        builder.userDetailsService(anyUserDetailsService);
     }
 }
