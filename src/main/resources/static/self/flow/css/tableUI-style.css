@@ -1,0 +1,88 @@
+@charset "utf-8";
+/*
+ * @description: 此css文件样式为相关的table样式等
+ * @author: Jeff
+ * @update: Jeff (2017-03-09 9:05)
+ */
+/* CSS Document */
+.table-UI1 {
+	width: 100%;
+	border-left: #B3E5FC solid 1px;
+	border-top: #B3E5FC solid 1px;
+	font-size: 13px;
+	color: #555;
+}
+.table-UI1 th {
+	border-right: #B3E5FC solid 1px;
+	border-bottom: #B3E5FC solid 1px;
+	padding: 5px 2px;
+}
+.table-UI1 td {
+	border-right: #B3E5FC solid 1px;
+	border-bottom: #B3E5FC solid 1px;
+	padding: 4px 2px;
+}
+.table-UI4th-bg {
+	width: 100%;
+	border-left: #B3E5FC solid 1px;
+	border-top: #B3E5FC solid 1px;
+	font-size: 13px;
+	color: #555;
+}
+.table-UI4th-bg th {
+	border-right: #B3E5FC solid 1px;
+	border-bottom: #B3E5FC solid 1px;
+	padding: 5px 2px;
+}
+.table-UI4th-bg td {
+	border-right: #B3E5FC solid 1px;
+	border-bottom: #B3E5FC solid 1px;
+	padding: 4px 2px;
+	line-height: 20px;
+	font-size: 12px;
+}
+.table-UI4th-bg th {
+	color: #555;
+	/* Webkit: Safari 4-5, Chrome 1-9 */ 
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#bbdefb), to(#90caf9));
+	/* Webkit: Safari 5.1+, Chrome 10+ */ 
+	background: -webkit-linear-gradient(top, #bbdefb, #90caf9);
+	/* Firefox 3.6+ */ 
+	background: -moz-linear-gradient(top, #bbdefb, #90caf9);
+	/* Opera 11.10+ */ 
+	background: -o-linear-gradient(top, #bbdefb, #90caf9);
+	/* IE 10 */ 
+	background: -ms-linear-gradient(top, #bbdefb, #90caf9);
+	/* IE < 10 */ 
+	/* 注意：这一行必须写在最后 */ 
+	FILTER: progid:DXImageTransform.Microsoft.Gradient(startColorStr=#bbdefb, endColorStr=#90caf9);
+}
+.table-UI4th-bg tr:hover {
+	background-color: #FFFDE7;
+}
+.table-UI4no-border {
+	width: 100%;
+	border-top: #90CAF9 solid 2px;
+	font-size: 13px;
+	color: #555;
+}
+.table-UI4no-border th {
+	background-color: #E3F3FD;
+	font-weight: normal;
+	border-bottom: #E1F5FE 1px solid;
+	padding: 5px 2px;
+	text-align: left;
+}
+.table-UI4no-border td {
+	padding: 4px 2px;
+	border-bottom: #E1F5FE 1px solid;
+}
+.table-UI4no-border tr:hover {
+	background-color: #FFFDE7;
+}
+.evenRow {
+	background-color: #F8FBFC;
+}
+.activeRow {
+ background-color:;
+}

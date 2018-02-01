@@ -1,73 +1,122 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>批量上线</title>
-    <head th:insert="~{/common/head :: header}" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="_csrf" th:content="${_csrf.token}" content=""/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" content=""/>
+    <script th:src="@{/self/flow/js/jquery.min.js}"></script>
+    <script th:src="@{/self/flow/js/unify_right_nav.js}"></script>
+    <script th:src="@{/self/flow/js/unify_judge_tip.js}"></script>
+    <script th:src="@{/self/flow/js/table_even_odd.js}"></script>
+    <script th:src="@{/self/flow/js/main_load.js}"></script>
+    <script th:src="@{/self/flow/js/popw_query.js}"></script>
+    <script th:src="@{/self/flow/js/chat_pop_query.js}"></script>
+    <script th:src="@{/self/common/shadow.js}"></script>
+
+    <link rel="icon" th:href="@{/public/favicon.ico}"/>
+
+    <link rel="stylesheet" th:href="@{/self/flow/css/unify_content.css}"/>
+    <link rel="stylesheet" th:href="@{/self/flow/css/rightside_bar.css}"/>
+    <link rel="stylesheet" th:href="@{/self/flow/css/common_style.css}"/>
+    <link rel="stylesheet" th:href="@{/self/flow/css/msg_style.css}"/>
+    <link rel="stylesheet" th:href="@{/self/flow/css/tableUI-style.css}"/>
+    <link rel="stylesheet" th:href="@{/self/flow/css/popw_style.css}"/>
+    <link rel="stylesheet" th:href="@{/self/flow/css/unify_msg_style.css}"/>
+    <link rel="stylesheet" th:href="@{/self/flow/css/page-common.css}"/>
+    <link rel="stylesheet" th:href="@{/self/common/css/shadow.css}"/>
+
+    <script>
+        $(function(){
+            if($(".u-left-column").find(".u-chapter-block").length>1){
+                $("#unify-first-block").css("min-height",0);
+            }else{
+                $("#unify-first-block").css("min-height",$(window).height()-320+"px");
+            }
+        });
+    </script>
+    <meta charset="utf-8">
+    <title>新建批量上线</title>
 </head>
+
 <body>
-    <!--<form class="form-horizontal" role="form" method="post">-->
-        <div class="modal-body">
-            <div class="form-group">
-                <label class="col-sm-3 control-label">标题</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" placeholder="必填" name="operationName">
-                </div>
+
+<div class="u-wrap">
+    <div class="u-main">
+
+        <p class="u-page-title">新建批量上线需求</p>
+        <div class="u-chapter-block" id="unify-first-block">
+            <div class="lev1-Lheader">
             </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">意见</label>
-                <div class="col-sm-9">
-                    <input type="text"  class="form-control" placeholder="必填" name="operationKey">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">选人模式</label>
-                <div class="col-sm-9">
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="userType" value="0">不选
-                        </label>
-                        <label>
-                            <input type="radio" name="userType" value="1">单选
-                        </label>
-                        <label>
-                            <input type="radio" name="userType" value="2">多选
-                        </label>
+            <div class="u-content-box">
+                <div class="u-content">
+                    <div class="u-content-part">
+                        <table class="u-table-common" cellpadding="0" cellspacing="0">
+                            <colgroup><col width="15%"><col width="35%"><col width="15%"><col width="35%"></colgroup>
+                            <tr>
+                                <th>需求名称</th>
+                                <td colspan="3"><input id="wfinstname" type="text" class="common-input h30 w98per"></td>
+                            </tr>
+                            <tr>
+                                <th>实施周期（天）</th>
+                                <td><input type="text" class="common-input" id="round"></td>
+                                <th>工作量（人天）</th>
+                                <td><input type="text" class="common-input" id="workload"></td>
+                            </tr>
+                        </table>
                     </div>
+
                 </div>
             </div>
         </div>
-        <div class="modal-footer" >
-            <button type="button" class="btn btn-primary" onclick="submit('saved')">保存</button>
-            <button type="button" class="btn btn-primary" onclick="submit('submit')">提交</button>
-        </div>
-    <!--</form>-->
+
+    </div>
+    <div style="position:fixed; left:0; bottom:0; height:40px; width:100%; background:url(/self/flow/unify_img/head-top-bg1.png) repeat-x left top;padding:10px 0; z-index:10;">
+        <div class="mybtnBox" align="center">
+            <span class="mybtn mybtn-large mybtn-blue w100" onclick="submit('submit')">提交</span>
+            <span class="mybtn mybtn-large mybtn-green w100" style="margin-left:20px;" onclick="submit('saved')">保存</span></div>
+    </div>
+</div>
 </body>
 <script th:inline="javascript">
-    var param = {};
     /*<![CDATA[*/
-    function submit(type){
+    var param = {};
+    function submit(type) {
         param["procDefKey"] = [[${procDefKey}]];
         param["businessKey"] = [[${businessKey}]];
-        param["title"] = $("#operationName").val();
-        param["opinion"] = $("#operationKey").val();
-        param["userType"] = $("input[name='userType']:checked").val();
+        param["wfinstname"] = $("#wfinstname").val();
+        param["round"] = $("#round").val();
+        param["workload"] = $("#workload").val();
         param["type"] = type;
 
         showProcessing();
+
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
         $.ajax({
             type: "POST",
             url: "/flow/start",
             data: {param:JSON.stringify(param)},
             dataType: "json",
             async:true,
+            beforeSend : function(xhr) {
+                xhr.setRequestHeader(header, token);
+            },
             success: function(data){
                 alert(data);
+                hideProcessing();
+                window.opener = null;
+                window.open("", "_self");
+                window.close();
+            },
+            error:function () {
+                alert("失败");
                 hideProcessing();
             }
         });
     }
     /*]]>*/
 </script>
-<script th:src="@{/public/js/basic.js}"></script>
+
 </html>

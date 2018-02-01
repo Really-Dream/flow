@@ -1,0 +1,102 @@
+@charset "utf-8";
+/*
+ * @description: 此css文件样式为页面填写审批意见窗口样式等
+ * @author: Jeff
+ * @update: Jeff (2016-09-28 11:41)
+ */
+.unify-msgw {
+	width: 520px;
+	font-family: 'Microsoft Yahei';
+	color: #555;
+	font-size: 13px;
+	background-color: #FAFAFA;
+	z-index: 100002;
+	display: none;
+	position: fixed;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	box-shadow: 0 0 15px rgba(189, 189, 189, 0.5);
+	-webkit-box-shadow: 0 0 15px rgba(189, 189, 189, 0.5);
+	-moz-box-shadow: 0 0 15px rgba(189, 189, 189, 0.5);
+}
+.shadowScreen {
+	width: 100%;
+	background-color: #000;
+	background-attachment: scroll;
+	opacity: 0.5;/* 支持CSS3的浏览器（FF 1.5也支持）*/
+	filter: alpha(opacity=50); /* IE */
+	-moz-opacity: 0.5;/* Moz + FF */
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 10000;
+}
+.unify-top-line {
+	font-size: 14px;
+	color: #555;
+	padding-left: 10px;
+	margin-top: 10px;
+}
+.unify-mTitle {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	border-bottom: #D1DEDF 1px solid;
+	line-height: 32px;
+	background-color: #5995C4;
+	overflow: hidden;
+}
+.unify-unread {
+	float: left;
+	font-size: 14px;
+	font-weight: bold;
+	color: #fff;
+	margin-left: 5px;
+}
+.unify-closemsg {
+	float: right;
+	width: 30px;
+	height: 30px;
+	background: url(../unify_img/msg-close.png) no-repeat center center;
+	cursor: pointer;
+}
+.unify-closemsg:hover {
+	background: #528DBC url(../unify_img/msg-close-red.png) no-repeat center center;
+}
+.unify-msgListContain {
+	min-height: 200px;
+	max-height: 450px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	border: #A5C7DB 1px solid;
+	border-top: none;
+	border-bottom: none;
+	overflow: hidden;
+	overflow-y: auto;
+}
+.unify-msg-down-line {
+	padding: 5px;
+	border: #A5C7DB 1px solid;
+	border-top: #E0E0E0 1px solid;
+}
+.unify-table-judge {
+	width: 98%;
+	font-size: 12px;
+	line-height: 20px;
+	margin-left: 20px;
+	border-spacing: 0;
+}
+.unify-table-judge td {
+	text-align: left;
+	padding-bottom: 4px;
+	padding-top: 4px;
+	color: #555;
+}
+.unify-table-judge th {
+	width: 200px;
+	text-align: left;
+	padding-bottom: 4px;
+	padding-top: 4px;
+	color: #888;
+}

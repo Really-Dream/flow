@@ -1,0 +1,481 @@
+@charset "utf-8";
+/*
+ * @description: 此css文件样式为统一视图页面主内容部分样式等
+ * @author: Jeff
+ * @update: Jeff (2016-09-28 11:26)
+ */
+body {
+	/*background-color: #94D7B6;*/
+	background: #B4DAEF url(../unify_img/body_repeat.png) repeat-x left top;
+	/*background-attachment:fixed;*/
+	font-family: microsoft yahei;
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+ul {
+	list-style-type: none;
+	padding: 0;
+}
+.u-header {
+	background-color: #f5f5f5;
+	height: 40px;
+}
+.u-header-inner {
+	width: 96%;
+	min-width: 980px;
+	max-width: 1300px;
+	margin: 0 auto;
+	font-size: 14px;
+	color: #888;
+	line-height: 40px;
+}
+.u-header-inner span {
+	color: #323232;
+	margin-right: 10px;
+}
+.u-wrap {
+	background: url(../unify_img/body_bg.jpg) no-repeat top center;
+}
+.u-main {
+	width: 60%;
+	min-width: 980px;
+	max-width: 1250px;
+	min-height: 600px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	position: relative;
+	z-index: 10;
+	background: url(../unify_img/main-bg.png) repeat;
+	padding: 10px;
+	border-radius: 4px;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+.u-main {
+}
+}  /*for Chrome/Safari*/
+.u-left-column {
+	margin-right: 250px;
+	font-family: 'Microsoft Yahei';
+	padding-bottom: 10px;
+}
+.u-page-title {
+	color: #323232;
+	font-size: 22px;
+	text-align: center;
+	background-color: #fff;
+	border-radius: 2px;
+	line-height: 30px;
+	padding:15px 0;
+}
+.u-chapter-block {
+	background-color: #fff;
+	border-radius: 2px;
+	padding-bottom: 10px;
+	margin-top: 15px;
+}
+.u-content {
+	margin-left: 15px;
+	margin-right: 15px;
+}
+.u-content-box {
+	padding-left: 10px;
+}
+.u-content-title {
+	font-size: 16px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	color: #555;
+	background: url(../unify_img/littleicon.png) no-repeat left center;
+	padding-left: 20px;
+	line-height: 26px;
+}
+.lev1-Lheader {
+	line-height: 24px;
+	overflow: hidden;
+	font-size: 20px;
+}
+.lev2-Lheader > .LH1 {
+	padding-left: 8px;
+	padding-right: 8px;
+}
+.lev3-Lheader > .LH1 {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.lev2-Lheader {
+	line-height: 22px;
+	overflow: hidden;
+	font-size: 18px;
+	margin-left: 5px;
+}
+.lev3-Lheader {
+	line-height: 20px;
+	overflow: hidden;
+	font-size: 17px;
+	margin-left: 5px;
+}
+.lev4-Lheader {
+	line-height: 20px;
+	overflow: hidden;
+	font-size: 17px;
+}
+.lev1-Lheader, .lev2-Lheader, .lev3-Lheader, .lev4-Lheader {
+	position: relative;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.LH1 {
+	float: left;
+	padding-left: 10px;
+	padding-right: 10px;
+	background-color: #08C;
+	color: white;
+	margin-right: 10px;
+	text-align: center;
+}
+.titleLine {
+	float: left;
+	margin-top: 12px;
+	width: 60%;
+	opacity: 0.15;
+	filter: alpha(opacity=15);
+	margin-left: 10px;
+	margin-right: 30px;
+}
+.LH2 {
+	float: left;
+	color: #555;
+}
+.clickIcon {
+	width: 18px;
+	height: 18px;
+	background-image: url(../unify_img/reduce.png);
+	background-position: left center;
+	background-repeat: no-repeat;
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	opacity: 0.65;
+	filter: alpha(opacity=65);
+	cursor: pointer;
+}
+.clickIcon:hover {
+	opacity: 1;
+	filter: alpha(opacity=100);
+}
+.currentClickIcon {
+	background-image: url(../unify_img/plus.png);
+}
+.seeMore, .seeLess {
+	color: #C0C0C0;
+	font-size: 12px;
+	background-image: url(../unify_img/downarrow1-1.png);
+	background-repeat: no-repeat;
+	background-position: right center;
+	padding-right: 32px;
+	cursor: pointer;
+}
+.seeMore:hover, .seeLess:hover {
+	color: #08C;
+}
+.seeLess {
+	background-image: url(../unify_img/downarrow1-2.png);
+}
+.seeMore1 {
+	background-image: url(../unify_img/downarrow1-2.png);
+}
+.storage {
+	background: url(../unify_img/storage.png) no-repeat center left;
+	padding-left: 20px;
+	margin-right: 8px;
+	margin-top: 4px;
+	cursor: pointer;
+}
+.begood {
+	background: url(../unify_img/begood.png) no-repeat center left;
+	padding-left: 20px;
+	margin-right: 8px;
+	margin-top: 4px;
+	cursor: pointer;
+}
+.setout {
+	background: url(../unify_img/setout.png) no-repeat center left;
+	padding-left: 20px;
+	margin-right: 8px;
+	margin-top: 4px;
+	cursor: pointer;
+}
+.edit {
+	float: right;
+	color: #909090;
+	font-size: 13px;
+	display: block;
+	margin-right: 20px;
+	cursor: pointer;
+}
+.line_exchange {
+	display: block;
+	float: left;
+	font-size: 14px;
+	padding: 4px;
+	color: #555;
+	cursor: pointer;
+}
+.line_exchange:hover {
+	background-color: #F1F8F9;
+}
+.slidepart {
+	width: 12px;
+	height: 8px;
+	background: url(../unify_img/contactlogo1.png) no-repeat left center;
+	float: right;
+	cursor: pointer;
+	display: block
+}
+.slidepart1 {
+	width: 12px;
+	height: 8px;
+	background: url(../unify_img/contactlogo.png) no-repeat left center;
+	float: right;
+	cursor: pointer;
+	display: block
+}
+.deletpart {
+	width: 16px;
+	height: 14px;
+	background: url(../unify_img/bin.png) no-repeat left center;
+	float: right;
+	margin-right: 20px;
+	cursor: pointer;
+	display: block
+}
+.dataman {
+	margin-left: 2px;
+	margin-right: 10px;
+}
+.content .data-man-menu li {
+	float: left
+}
+.delet-icon {
+	background: url(../unify_img/X.png) no-repeat right center;
+	padding-right: 20px;
+}
+.delet-icon:hover {
+	color: red;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.active-focus {
+	background: url(../unify_img/focus-h.png) no-repeat left center;
+	padding-left: 25px;
+	font-size: 14px;
+	color: #F83;
+	cursor: pointer;
+}
+.reque-name {
+	font-size: 15px;
+	color: #08C;
+}
+.u-content-part {
+	margin: 0px 20px;
+	padding: 2px 2px;
+}
+.req-document {
+	color: #08C;
+	cursor: pointer;
+	font-size: 13px;
+}
+.req-document:hover {
+	text-decoration: underline;
+}
+.lev1-children-content {
+	margin-left: 15px;
+	margin-right: 15px;
+}
+.add-plan {
+	color: yellow;
+	cursor: pointer;
+}
+.u-table-common {
+	width: 100%;
+}
+.u-table-common th {
+	text-align: left;
+	padding: 10px 4px;
+	font-size: 13px;
+	color: #666;
+}
+.u-table-common td {
+	text-align: left;
+	padding: 10px 4px;
+	font-size: 13px;
+	color: #555;
+}
+.u-table-common tr.color-tr {
+	background-color: #F8F8F8;
+}
+.u-table-common .u-unify-other-infor {
+	display: none;
+}
+.u-content-part-phase {
+	font-size: 13px;
+	line-height: 24px;
+	color: #555;
+	background-color: #F8FBFC;
+	padding: 4px;
+}
+.u-form-border-table {
+	border-spacing: 0;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	border-left: 1px solid #E0E0E0;
+	border-top: 1px solid #E0E0E0;
+}
+.u-form-border-table th {
+	line-height: 20px;
+	border-right: #E0E0E0 1px solid;
+	border-bottom: #E0E0E0 1px solid;
+	font-size: 12px;
+	color: #555;
+	padding: 6px 4px;
+	background-color: #F1F8F9;
+}
+.u-form-border-table td {
+	line-height: 20px;
+	padding: 6px 4px;
+	border-right: #E0E0E0 1px solid;
+	border-bottom: #E0E0E0 1px solid;
+	text-align: center;
+	font-size: 12px;
+	color: #555;
+}
+.u-form-border-table .left {
+	text-align: left;
+}
+/*上线管理页面样式*/
+.u-online-block {
+	border: #d8d8d8 1px solid;
+	margin-bottom: 20px;
+}
+.u-online-block-inner-t {
+	background-color: #08c;
+	color: #fff;
+	padding: 6px 2px;
+	font-size: 14px;
+	line-height: 24px;
+}
+.u-online-table {
+	width: 100%;
+	font-size: 12px;
+	color: #555;
+}
+.u-online-table th {
+	font-weight: bold;
+	padding: 8px 4px;
+	border-bottom: #d8d8d8 dashed 1px;
+	text-align: left;
+}
+.u-online-table td {
+	font-weight: normal;
+	padding: 8px 4px;
+	border-bottom: #d8d8d8 dashed 1px;
+	text-align: left;
+}
+.u-r-a-btn {
+	position: absolute;
+	top: 5px;
+	right: 20px;
+}
+/*流程轨迹页面样式*/
+.u-flow-common {
+	width: 100%;
+}
+.u-flow-common td {
+	font-size: 12px;
+	color: #666;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 30px;
+	background: url(../unify_img/round-9.png) no-repeat 2px 11px;
+	border-bottom: #E0E0E0 1px dotted;
+}
+.u-flow-common .onflow {
+	color: #F60;
+	background: url(../unify_img/round-9-on.png) no-repeat left 9px;
+}
+.flow-tips {
+	line-height: 22px;
+}
+.flow-tips span {
+	margin-right: 20px;
+}
+.flow-part-box {
+	margin-left: 20px;
+	border-bottom: #f0f0f0 1px solid;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+.addnewflow {
+	color: #f60;
+}
+.u-flow-newadd td {
+	background: none;
+	padding-left: 10px;
+	border-bottom: none;
+}
+.u-flow-newadd td:hover {
+	background: #f1f8f9;
+}
+.flow-tips .flow-part-title {
+	background: url(../unify_img/littleicon.png) no-repeat left center;
+	padding-left: 20px;
+	font-size: 13px;
+color:;
+}
+.u-flow-content-part {
+	margin-right: 20px;
+	margin-top: 10px;
+	padding: 2px 2px;
+}
+/*流程文档页面样式*/
+.docfile {
+	color: #08C;
+	padding-left: 20px;
+	line-height: 20px;
+	cursor: pointer;
+}
+.docfile:hover {
+	text-decoration: underline;
+}
+.doc-type {
+	color: #F60;
+	border: #F60 1px solid;
+	border-radius: 2px;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+.word-type {
+	background: url(../unify_img/word-type.png) no-repeat left center;
+}
+.ppt-type {
+	background: url(../unify_img/ppt-type.png) no-repeat left center;
+}
+.pdf-type {
+	background: url(../unify_img/pdf-type.png) no-repeat left center;
+}
+.excel-type {
+	background: url(../unify_img/excel-type.png) no-repeat left center;
+}
+.vsd-type {
+	background: url(../unify_img/vsd-type.png) no-repeat left center;
+}
+.txt-type {
+	background: url(../unify_img/txt-type.png) no-repeat left center;
+}
+.comfile-type {
+	background: url(../unify_img/fileicon.png) no-repeat left center;
+}

@@ -1,8 +1,8 @@
 package com.dream.bpm.model.DTO;
 
 import com.dream.bpm.model.entity.TbNodeInfo;
-import com.dream.bpm.model.entity.User;
 import lombok.Data;
+import org.activiti.engine.identity.User;
 
 import java.util.List;
 

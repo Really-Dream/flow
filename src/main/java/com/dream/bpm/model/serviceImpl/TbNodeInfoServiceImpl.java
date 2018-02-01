@@ -3,10 +3,10 @@ package com.dream.bpm.model.serviceImpl;
 import com.dream.bpm.model.DTO.TbNodeInfoDTO;
 import com.dream.bpm.model.entity.InstanceAttr;
 import com.dream.bpm.model.entity.TbNodeInfo;
-import com.dream.bpm.model.entity.User;
 import com.dream.bpm.model.repository.TbNodeInfoRepository;
 import com.dream.bpm.model.service.TbNodeInfoService;
 import com.dream.util.JDBCTemplate;
+import org.activiti.engine.identity.User;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,7 +76,7 @@ public class TbNodeInfoServiceImpl implements TbNodeInfoService{
     }
 
     //下一步处理人为SQL，或者单纯一个表达式
-    public List<User> getUserBySQL(String SQL,String businessKey){
+    public List<User> getUserBySQL(String SQL, String businessKey){
         List<String> ls=new ArrayList<>();
         Pattern pattern = Pattern.compile("(?<=\\{)(.+?)(?=\\})");
         Matcher matcher = pattern.matcher(SQL);

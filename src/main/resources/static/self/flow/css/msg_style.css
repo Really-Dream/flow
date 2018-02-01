@@ -1,0 +1,97 @@
+@charset "utf-8";
+/*
+ * @description: 此css文件样式为页面填写审批意见窗口样式等
+ * @author: Jeff
+ * @update: Jeff (2016-09-28 11:41)
+ */
+.messagearea {
+	width: 520px;
+	font-family: 'Microsoft Yahei';
+	color: #555;
+	font-size: 13px;
+	background-color: #FAFAFA;
+	z-index: 100002;
+	display: none;
+	position: fixed;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	box-shadow: 0 0 15px rgba(189, 189, 189, 0.5);
+	-webkit-box-shadow: 0 0 15px rgba(189, 189, 189, 0.5);
+	-moz-box-shadow: 0 0 15px rgba(189, 189, 189, 0.5);
+}
+.shadowScreen {
+	width: 100%;
+	background-color: #000;
+	background-attachment: scroll;
+	opacity: 0.5;/* 支持CSS3的浏览器（FF 1.5也支持）*/
+	filter: alpha(opacity=50); /* IE */
+	-moz-opacity: 0.5;/* Moz + FF */
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 10000;
+}
+.top-line {
+	font-size: 14px;
+	color: #555;
+	padding-left: 10px;
+	margin-top: 10px;
+}
+.tipwin {
+	font-size: 11px;
+	color: white;
+	border-radius: 40px;
+	background-color: #DB3434;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+.mTitle {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	border-bottom: #D1DEDF 1px solid;
+	line-height: 30px;
+	background-color: #5995C4;
+	overflow: hidden;
+}
+.unread {
+	float: left;
+	font-size: 14px;
+	font-weight: bold;
+	color: #fff;
+	margin-left: 5px;
+}
+.mTitle .allmsgnum {
+	font-size: 10px;
+	line-height: 33px;
+	margin-left: 10px;
+	color: #808080;
+	float: left;
+}
+.closemsg {
+	float: right;
+	width: 30px;
+	height: 30px;
+	background: url(../unify_img/msg-close.png) no-repeat center center;
+	cursor: pointer;
+}
+.closemsg:hover {
+	background: #528DBC url(../unify_img/msg-close-red.png) no-repeat center center;
+}
+.msgListContain {
+	min-height: 200px;
+	max-height: 450px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	border: #A5C7DB 1px solid;
+	border-top: none;
+	border-bottom: none;
+	overflow: hidden;
+	overflow-y: auto;
+}
+.msg-down-line {
+	padding: 5px;
+	border: #A5C7DB 1px solid;
+	border-top: #E0E0E0 1px solid;
+}

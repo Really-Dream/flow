@@ -1,6 +1,5 @@
 package com.dream.bpm.model.serviceImpl;
 
-import com.dream.util.KeyUtil;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -31,6 +30,8 @@ public class FlowServiceImpl {
         identityService.setAuthenticatedUserId("zhangsan");
         //根据流程定义Key部署最新的流程
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(proDefKey,businessKey,map);
+        //设置流程名称
+        runtimeService.setProcessInstanceName(processInstance.getProcessInstanceId(),(String) map.get("wfinstname"));
         return processInstance.getProcessInstanceId();
     }
 

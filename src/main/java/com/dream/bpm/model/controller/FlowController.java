@@ -4,9 +4,15 @@ import com.dream.bpm.model.serviceImpl.FlowServiceImpl;
 import com.dream.bpm.model.serviceImpl.InstanceAttrServiceImpl;
 import com.dream.util.KeyUtil;
 import com.google.gson.Gson;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +37,12 @@ public class FlowController {
 
     @Autowired
     InstanceAttrServiceImpl instanceAttrService;
+
+    @Autowired
+    TaskService taskService;
+
+    @Autowired
+    HistoryService historyService;
 
     @Autowired
     Gson gson;
@@ -79,14 +91,43 @@ public class FlowController {
         //JSON格式数据转化为MAP
         Map<String,Object> parameterMap = gson.fromJson(param, Map.class);
         //添加第一步处理人
-        parameterMap.put("createUser","admin");
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        parameterMap.put("createUser",userDetails.getUsername());
 
         String procDefKey = (String)parameterMap.get("procDefKey");
         String businessKey = (String)parameterMap.get("businessKey");
-        //流程启动
-        flowService.startProcess(procDefKey,businessKey,parameterMap);
+
+        if("submit".equals(parameterMap.get("type"))){
+            //流程启动
+            flowService.startProcess(procDefKey,businessKey,parameterMap);
+        }else if("saved".equals(parameterMap.get("type"))){
+            //草稿
+        }
         //数据存储
-        instanceAttrService.save(parameterMap,businessKey);
+//        instanceAttrService.save(parameterMap,businessKey);
         return gson.toJson("成功！");
     }
+
+    /**
+     * 我的待办
+     */
+    @RequestMapping("myTodo")
+    public String myTodo(Model model){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Task> list = taskService.createTaskQuery().taskAssignee(userDetails.getUsername()).list();
+        model.addAttribute("list",list);
+        return "flow/base/myTodo";
+    }
+
+    /**
+     * 我的已办
+     */
+    @RequestMapping("myDone")
+    public String myDone(Model model){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<HistoricTaskInstance> list = historyService.createHistoricTaskInstanceQuery().taskAssignee(userDetails.getUsername()).list();
+        model.addAttribute("list",list);
+        return "flow/base/myDone";
+    }
+
 }

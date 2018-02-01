@@ -28,11 +28,11 @@ public class TbMenuServiceImplTest {
     public void saveTest(){
         TbMenu tbMenu = new TbMenu();
         tbMenu.setId(KeyUtil.getUniqueKey());
-        tbMenu.setMenuAction("#flow/index");
-        tbMenu.setMenuName("流程启动列表");
+        tbMenu.setMenuAction("#/flow/myDone");
+        tbMenu.setMenuName("我的已办");
         tbMenu.setMenuLevel("2");
-        tbMenu.setParentId("1513754579437484127");
-        tbMenu.setMenuOrder("3");
+        tbMenu.setParentId("1517466125558556538");
+        tbMenu.setMenuOrder("2");
         tbMenuService.save(tbMenu);
     }
 

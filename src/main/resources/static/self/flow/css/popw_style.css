@@ -1,0 +1,263 @@
+@charset "utf-8";
+/*
+ * @description: 此css文件样式为页面中选择人员机构窗口样式等
+ * @author: Jeff
+ * @update: Jeff (2016-09-26 09:20)
+ */
+.popw-messagearea {
+	width: 580px;
+	font-family: 'Microsoft Yahei';
+	color: #555;
+	font-size: 13px;
+	background-color: #E0E0E0;
+	padding: 2px;
+	z-index: 9000;
+	display: none;
+	position: fixed;
+	border-radius: 4px;
+	left: 0;
+	top: 0;
+}
+.shadowScreen {
+	width: 100%;
+	min-height: 1000px;
+	background-color: #323232;
+	background-attachment: scroll;
+	opacity: .5;/* 支持CSS3的浏览器（FF 1.5也支持）*/
+	filter: alpha(opacity=50); /* IE */
+	-moz-opacity: .5;/* Moz + FF */
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 8000;
+}
+.popw-msg-box {
+	overflow: hidden;
+	background-color: #fff;
+	padding-bottom: 10px;
+	min-height: 300px;
+	max-height: 500px;
+	overflow-y: auto;
+}
+.popw-msg-box-inner {
+	min-height: 300px;
+	overflow-y: auto;
+}
+.popw-mTitle {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	line-height: 32px;
+	background-color: #5895BB;
+	overflow: hidden;
+}
+.popw-unread {
+	font-size: 14px;
+	font-weight: bold;
+	color: #FFF;
+	margin-left: 5px;
+	float: left;
+	background: url(icons/lev5.png) no-repeat left center;
+	padding-left: 16px;
+}
+.popw-mTitle .popw-allmsgnum {
+	font-size: 10px;
+	line-height: 33px;
+	margin-left: 10px;
+	color: #808080;
+	float: left
+}
+.popw-closemsg {
+	float: right;
+	width: 20px;
+	height: 30px;
+	background: url(icons/close.png) no-repeat center center;
+	cursor: pointer;
+}
+.popw-closemsg:hover {
+	color: red;
+	text-decoration: underline;
+}
+.popw-msgListContain {
+	min-height: 56px;
+	height: 350px;
+	overflow: hidden;
+	overflow-y: auto;
+	border: #BCCED8 1px solid;
+}
+.popw-btn4msg {
+	border-top: #F0F3F8 1px solid;
+	height: 20px;
+}
+.popw-work-tip {
+	font-size: 13px;
+	line-height: 24px;
+	margin-left: 5px;
+	margin-top: 5px;
+	font-weight: bold;
+}
+.popw-work-tip span {
+	margin-right: 5px;
+}
+.popw-msg-table {
+	width: 99%;
+	margin: 0px auto;
+	margin-top: 5px;
+	line-height: 18px;
+}
+.popw-msg-table th {
+	font-size: 13px;
+	line-height: 28px;
+	color: #FFF;
+	background-color: #89B9D5;
+}
+.msg-table td {
+	font-size: 12px;
+	line-height: 20px;
+	padding: 6px 2px;
+	text-align: center;
+	border-bottom: #EAEAEA 1px dotted;
+}
+.popw-msg-table .even td {
+	background-color: #FBFBFB;
+}
+.popw-red {
+	color: red;
+}
+.popw-btn-box {
+	padding: 4px;
+	background-color: #FBFBFB;
+	border-top: #DADADA 1px solid;
+}
+.popw-win-box {
+	overflow: hidden;
+	width: 98%;
+	margin: 0 auto;
+	padding-bottom: 10px;
+}
+.popw-leftitem {
+	float: left;
+	width: 49%;
+}
+.popw-rightitem {
+	float: right;
+	width: 48%;
+}
+.popw-allt {
+	margin: 0;
+	padding: 0;
+	font-size: 13px;
+	margin-bottom: 5px;
+	padding-left: 12px;
+	color: #555;
+	background: url(icons/d-lev1.png) no-repeat left center;
+}
+.popw-tree-box {
+	border: #D8D8D8 1px solid;
+	overflow: auto;
+	height: 360px;
+}
+.popw-r-choseitem-ul {
+	list-style-type: none;
+	margin-top: 5px;
+}
+.popw-r-choseitem {
+	color: #555;
+	padding: 4px 5px;
+	color: #08c;
+}
+.popw-r-choseitem:hover {
+	background-color: #E9F7F9;
+	cursor: pointer;
+}
+.popw-man-partment {
+	font-size: 12px;
+	color: #888;
+	background: url(icons/lev3icon.png) no-repeat left center;
+	padding-left: 12px;
+	line-height: 20px;
+	border-bottom: #F2F2F2 1px solid;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.popw-guyitem {
+	display: block;
+	line-height: 22px;
+	padding-left: 4px;
+	cursor: pointer;
+	color: #666;
+	position: relative;
+}
+.popw-guyitem:hover {
+	color: #555;
+	background-color: #E9F7F9;
+}
+.pop-btn-box {
+	border-top: #f0f3f8 1px solid;
+	overflow: hidden;
+	padding-top: 4px;
+	padding-bottom: 2px;
+	background-color: #fafbfb;
+}
+.pop-btn {
+	font-family: "microsoft yahei";
+	border: none;
+	display: inline-block;
+	text-align: center;
+	border-radius: 3px;
+	overflow: hidden;
+	-moz-transition: opacity .3s ease-in;
+	-webkit-transition: opacity .3s ease-in;
+	-o-transition: opacity .3s ease-in;
+	-ms-transition: opacity .3s ease-in;
+	transition: opacity .3s ease-in;
+	cursor: pointer;
+	margin-right: 5px;
+}
+.pop-btn:hover {
+	opacity: 0.85;
+	filter: alpha(opacity=85);
+}
+.pop-btn-ok {
+	line-height: 20px;
+	font-size: 13px;
+	color: #fff;
+	background-color: #08C;
+	padding: 3px 12px;
+	float: right;
+}
+.pop-btn-concel {
+	line-height: 20px;
+	font-size: 13px;
+	color: #fff;
+	background-color: #DD0000;
+	padding: 3px 12px;
+	float: right;
+}
+.pop-insert-box {
+	height: 40px;
+	margin: 5px;
+	border-bottom: #f6f6f6 1px solid;
+}
+.pop-insert-input {
+	font-family: microsoft yahei;
+	border: #d8d8d8 1px solid;
+	font-size: 13px;
+	color: #555;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 2px;
+	width: 80%;
+	float: left;
+}
+.font-gs {
+	font-size: 12px;
+	color: #909090;
+	margin-top: 16px
+}
+.font-gs:hover {
+	color: red;
+	text-decoration: underline;
+	cursor: pointer;
+}

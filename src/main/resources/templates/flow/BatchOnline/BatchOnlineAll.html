@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script th:src="@{/self/flow/js/jquery.min.js}"></script>
+    <script th:src="@{/self/flow/js/unify_right_nav.js}"></script>
+    <script th:src="@{/self/flow/js/unify_judge_tip.js}"></script>
+    <script th:src="@{/self/flow/js/table_even_odd.js}"></script>
+    <script th:src="@{/self/flow/js/main_load.js}"></script>
+    <script th:src="@{/self/flow/js/popw_query.js}"></script>
+    <script th:src="@{/self/flow/js/chat_pop_query.js}"></script>
+    <link rel="icon" th:href="@{/public/favicon.ico}"/>
+
+    <link rel="stylesheet" th:href="@{/self/flow/css/unify_content.css}"/>
+    <link rel="stylesheet" th:href="@{/self/flow/css/rightside_bar.css}"/>
+    <link rel="stylesheet" th:href="@{/self/flow/css/common_style.css}"/>
+    <link rel="stylesheet" th:href="@{/self/flow/css/msg_style.css}"/>
+    <link rel="stylesheet" th:href="@{/self/flow/css/tableUI-style.css}"/>
+    <link rel="stylesheet" th:href="@{/self/flow/css/popw_style.css}"/>
+    <link rel="stylesheet" th:href="@{/self/flow/css/unify_msg_style.css}"/>
+    <link rel="stylesheet" th:href="@{/self/flow/css/page-common.css}"/>
+    <script>
+        //表格样式展示
+        $(function() {
+            $(".u-table-common").tableUI();
+        });
+        //需求提出 部分展示或者隐藏查看更多
+        function SwitchDisplay(obj){
+            $(obj).parent("th").parent("tr").siblings(".u-unify-other-infor").toggle();
+        };
+        //鼠标经过右侧栏出现小窗口
+        function getMinTips(obj,tid){
+            $("#"+tid).css({"top":0,"right":40}).fadeIn(100);
+            $(obj).append($("#"+tid));
+        };
+        //鼠标离开右侧栏隐藏小窗口
+        function hideMinTips(obj,htid){
+            $("#"+htid).hide();
+            $("body").append($("#"+htid));
+        };
+        function getBFixedMain(obj){
+            $(obj).hide();
+            $("#doarea-main").slideDown(100);
+            $("#doarea-main").find("textarea").focus();
+        }
+        //隐藏设置模块盒子
+        $(function(){
+            $(document).bind('click',function(e){
+                var e=e||window.event;
+                var elem=e.target||e.srcElement;
+                while(elem){
+                    if(elem.id&&elem.id=='doarea-main'||elem.id=='doarea-min'){
+                        return;
+                    }
+                    elem=elem.parentNode;
+                }
+                $("#doarea-min").slideDown(100);
+                $("#doarea-main").hide();
+            });
+
+        });
+        //关注需求
+        function focusReq(obj){
+            if($(obj).hasClass("focusmark-on")){
+                $(obj).attr("title","关注此关注").removeClass("focusmark-on");
+            }else{
+                $(obj).attr("title","取消关注").addClass("focusmark-on");
+            };
+        };
+        //常用意见
+        function getCommonTips(){
+            $("#ub-tipbox").show();
+        };
+        $(document).click(function(event){
+            //var $this = $(event.target);
+            if(!$(event.target).hasClass("common-tip-btn")){
+                $("#ub-tipbox").hide();}
+        });
+        $(function(){
+            $(".u-area-tipbox p").click(function(){
+                $("#areatip").val($(this).text())
+            });
+        });
+    </script>
+    <script>
+        $(function(){
+            if($(".u-left-column").find(".u-chapter-block").length>1){
+                $("#unify-first-block").css("min-height",0);
+            }else{
+                $("#unify-first-block").css("min-height",$(window).height()-120+"px");
+            }
+        });
+
+    </script>
+    <meta charset="utf-8">
+    <title>统一视图</title>
+</head>
+
+<body>
+
+
+<!--To Top-->
+<div class="back-top" id="back-top" title="返回顶部"><div onClick="javascript:scroll(0,0)" class="back-icon" id="back-icon"></div> </div>
+<div class="right-fixed-part">
+    <div style="margin-top:20px; margin-bottom:20px;">
+        <div align="center" title="讨论消息" onClick="getChatWinQuery('chatwin')"><span class="msgmark alertmark"></span></div>
+        <span class="focusmark" title="关注此需求" onClick="focusReq(this);"></span>
+        <span class="focusmark" style="background:url(/self/flow/unify_img/pencil.png) no-repeat center center;" title="审批意见" onClick="GetNewDoArea(this,'mynewidea');"></span>
+    </div>
+    <!--<div class="R-fixed-item focus"><span class="r-f-i-name">我的关注</span></div>-->
+    <div class="R-fixed-item document" onMouseEnter="getMinTips(this,'docWin');" onMouseLeave="hideMinTips(this,'docWin');">
+        <span class="r-f-i-name">文档区</span><p style="display:inline-block; position:absolute; top:0; right:2px; background-color:red; border-radius:6px; font-size:12px; color:#fff; padding:0 3px;">5</p></div>
+    <div class="R-fixed-item process" onMouseEnter="getMinTips(this,'proWin');" onMouseLeave="hideMinTips(this,'proWin');"><span class="r-f-i-name">流程轨迹</span></div>
+    <div class="R-fixed-item undone"><span class="r-f-i-name">我的待办</span></div>
+    <div class="R-fixed-item allpro" onClick="javascript:window.open('流程全景视图.html'); "><span class="r-f-i-name">全景视图</span></div>
+</div>
+<div class="u-wrap">
+    <div class="u-main">
+
+        <p class="u-page-title">实名制支撑改造需求-0307实名制支撑改造需求-0307实名制支撑改造需求-0307</p>
+        <div class="u-chapter-block" id="unify-first-block">
+            <div class="lev1-Lheader">
+                <div class="LH1">1</div>
+                <div class="LH2"><a name="link1">需求提出</a></div>
+                <hr class="titleLine">
+                <div class="clickIcon"></div>
+            </div>
+            <div class="u-content-box">
+                <div class="u-content">
+                    <!--<div class="u-content-title">基本信息</div>-->
+                    <div class="u-content-part">
+                        <table class="u-table-common" cellpadding="0" cellspacing="0">
+                            <colgroup><col width="15%"><col width="35%"><col width="15%"><col width="35%"></colgroup>
+                            <tr>
+                                <th>业务需求名称</th>
+                                <td colspan="3"><input type="text" class="common-input h30 w98per"></td>
+                            </tr>
+                            <tr>
+                                <th>实施周期（天）</th>
+                                <td><input type="text" class="common-input"></td>
+                                <th>工作量（人天）</th>
+                                <td><input type="text" class="common-input"></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="u-chapter-block">
+                <div class="lev1-Lheader">
+                    <div class="LH1">5</div>
+                    <div class="LH2"><a name="link5">移交维护</a></div>
+                    <hr class="titleLine">
+                    <div class="clickIcon"></div>
+                </div>
+                <div class="u-content-box" id="u-process-content_4">
+                    <div class="u-content">
+                        <div class="u-content-title">需求过程评估</div>
+                        <div class="u-content-part">
+                            <table class="u-table-common" cellpadding="0" cellspacing="0">
+                                <colgroup><col width="15%"><col width="35%"><col width="15%"><col width="35%"></colgroup>
+                                <tr>
+                                    <th>实施周期（天）</th>
+                                    <td><input type="text" class="common-input"></td>
+                                    <th>工作量（人天）</th>
+                                    <td><input type="text" class="common-input"></td>
+                                </tr>
+                                <tr>
+                                    <th>受理累计时常（天）</th>
+                                    <td><input type="text" class="common-input"></td>
+                                    <th>受理累计时常占比</th>
+                                    <td><input type="text" class="common-input"></td>
+                                </tr>
+                                <tr>
+                                    <th>审批累计时常（天）</th>
+                                    <td><input type="text" class="common-input"></td>
+                                    <th>审批累计时常占比</th>
+                                    <td><input type="text" class="common-input"></td>
+                                </tr>
+                                <tr>
+                                    <th>评审累计时常（天）</th>
+                                    <td><input type="text" class="common-input"></td>
+                                    <th>评审累计时常占比</th>
+                                    <td><input type="text" class="common-input"></td>
+                                </tr>
+                                <tr>
+                                    <th>开发累计时常（天）</th>
+                                    <td><input type="text" class="common-input"></td>
+                                    <th>开发累计时常占比</th>
+                                    <td><input type="text" class="common-input"></td>
+                                </tr>
+                                <tr>
+                                    <th>测试累计时常（天）</th>
+                                    <td><input type="text" class="common-input"></td>
+                                    <th>测试累计时常占比</th>
+                                    <td><input type="text" class="common-input"></td>
+                                </tr>
+                                <tr>
+                                    <th>测试审核累计时常（天）</th>
+                                    <td><input type="text" class="common-input"></td>
+                                    <th>测试审核累计时常占比</th>
+                                    <td><input type="text" class="common-input"></td>
+                                </tr>
+                                <tr>
+                                    <th>待上线累计时常（天）</th>
+                                    <td><input type="text" class="common-input"></td>
+                                    <th>待上线累计时常占比</th>
+                                    <td><input type="text" class="common-input"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="u-content-title">需求质量评估</div>
+                        <div class="u-content-part" style="display:none;">
+                            <table class="u-table-common" cellpadding="0" cellspacing="0">
+                                <colgroup><col width="15%"><col width="35%"><col width="15%"><col width="35%"></colgroup>
+                                <tr>
+                                    <th>测试缺陷数量</th>
+                                    <td><input type="text" class="common-input"></td>
+                                    <th>上线故障次数</th>
+                                    <td><input type="text" class="common-input"></td>
+                                </tr>
+                                <tr>
+                                    <th>测试用例数量</th>
+                                    <td><input type="text" class="common-input"></td>
+                                    <th>开发任务管理</th>
+                                    <td><input type="text" class="common-input"></td>
+                                </tr>
+                                <tr>
+                                    <th>文档完整性</th>
+                                    <td colspan="3"><textarea class="common-input common-textarea"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>备注</th>
+                                    <td colspan="3"><textarea class="common-input common-textarea"></textarea></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="u-content-title">需求效益评估</div>
+                        <div class="u-content-part" style="display:none;">
+                            <table class="u-table-common" cellpadding="0" cellspacing="0">
+                                <colgroup><col width="15%"><col width="35%"><col width="15%"><col width="35%"></colgroup>
+                                <tr>
+                                    <th>累计业务办理量</th>
+                                    <td><input type="text" class="common-input"></td>
+                                    <th>累计业务使用量</th>
+                                    <td><input type="text" class="common-input"></td>
+                                </tr>
+                                <tr>
+                                    <th>累计用户新增量</th>
+                                    <td><input type="text" class="common-input"></td>
+                                    <th>其他</th>
+                                    <td><input type="text" class="common-input"></td>
+                                </tr>
+                                <tr>
+                                    <th>效益描述</th>
+                                    <td colspan="3"><textarea class="common-input common-textarea"></textarea></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<!--右侧目录区域-->
+
+
+</body>
+
+
+</html>

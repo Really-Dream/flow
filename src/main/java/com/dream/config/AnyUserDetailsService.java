@@ -1,6 +1,5 @@
 package com.dream.config;
 
-import com.dream.bpm.model.service.UserService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
@@ -21,16 +20,14 @@ import java.util.List;
 @Service
 public class AnyUserDetailsService implements UserDetailsService{
 
-//    private final UserService userService;
-
     @Autowired
     IdentityService identityService;
 
-//    @Autowired
-//    AnyUserDetailsService(UserService userService){
-//        this.userService = userService;
-//    }
-
+    /**
+     * 验证用户信息
+     * @param username 用户ID
+     * @throws UsernameNotFoundException
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
         User user = identityService.createUserQuery().userId(username).singleResult();
