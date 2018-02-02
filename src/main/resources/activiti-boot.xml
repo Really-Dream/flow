@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+        <bean id="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">
+            <property name="eventListeners">
+                <list>
+                    <bean class="com.dream.bpm.model.support.HumanTaskListener"/>
+                </list>
+            </property>
+
+            <property name="customDefaultBpmnParseHandlers">
+                <list>
+                    <bean class="com.dream.bpm.model.support.ProxyUserTaskBpmnParseHandler">
+                        <property name="taskListenerId" value="customTaskListener"/>
+                        <property name="useDefaultUserTaskParser" value="true"/>
+                    </bean>
+                </list>
+            </property>
+        </bean>
+
+        <!-- 在记录history之前执行的TaskListener -->
+        <bean id="customTaskListener" class="com.dream.bpm.model.support.ProxyTaskListener">
+            <property name="taskListeners">
+                <list>
+                    <bean class="com.dream.bpm.model.support.HumanTaskCopy"/>
+                </list>
+            </property>
+        </bean>
+
+</beans>

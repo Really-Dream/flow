@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-//                .antMatchers("/menu/index").permitAll()
+                .antMatchers("/menu/login").permitAll()
                 //其他地址的访问都需要验证权限
                 .anyRequest().authenticated()
                 .and()

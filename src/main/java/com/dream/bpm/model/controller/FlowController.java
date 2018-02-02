@@ -108,6 +108,18 @@ public class FlowController {
         return gson.toJson("成功！");
     }
 
+    @RequestMapping("complete")
+    @ResponseBody
+    public String complete(String param){
+        //JSON格式数据转化为MAP
+        Map<String,Object> parameterMap = gson.fromJson(param, Map.class);
+
+        String taskId = (String)parameterMap.get("taskId");
+
+        flowService.complete(taskId,parameterMap);
+        return gson.toJson("成功！");
+    }
+
     /**
      * 我的待办
      */

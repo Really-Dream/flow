@@ -1,5 +1,6 @@
 package com.dream.bpm.model.serviceImpl;
 
+import com.dream.bpm.model.support.HumanTaskListener;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -31,6 +32,8 @@ public class FlowServiceImpl {
         //根据流程定义Key部署最新的流程
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(proDefKey,businessKey,map);
         //设置流程名称
+        HumanTaskListener humanTaskListener = new HumanTaskListener();
+        runtimeService.addEventListener(humanTaskListener);
         runtimeService.setProcessInstanceName(processInstance.getProcessInstanceId(),(String) map.get("wfinstname"));
         return processInstance.getProcessInstanceId();
     }
