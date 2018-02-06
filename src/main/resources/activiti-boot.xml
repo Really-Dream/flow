@@ -1,32 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation="
+       	http://www.springframework.org/schema/beans
+ 		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        "
+>
+    <!--流程activiti相关配置-->
+    <!-- spring负责创建流程引擎的配置文件 -->
+    <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+        <property name="history" value="full"/>
+        <!-- 数据源 -->
+        <property name="dataSource" ref="dataSource" />
+        <!-- 配置事务管理器，统一事务 -->
+        <property name="transactionManager" ref="transactionManager" />
+        <!-- 设置建表策略，如果没有表，自动创建表 -->
+        <property name="databaseSchemaUpdate" value="true" />
+        <!-- 是否启动jobExecutor -->
+        <property name="jobExecutorActivate" value="false" />
 
-        <bean id="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">
-            <property name="eventListeners">
-                <list>
-                    <bean class="com.dream.bpm.model.support.HumanTaskListener"/>
-                </list>
-            </property>
+        <!--activiti推荐的全局监听器-->
+        <property name="eventListeners">
+            <list>
+                <ref bean="globalEventListener"/>
+            </list>
+        </property>
 
-            <property name="customDefaultBpmnParseHandlers">
-                <list>
-                    <bean class="com.dream.bpm.model.support.ProxyUserTaskBpmnParseHandler">
-                        <property name="taskListenerId" value="customTaskListener"/>
-                        <property name="useDefaultUserTaskParser" value="true"/>
-                    </bean>
-                </list>
-            </property>
-        </bean>
+        <!--添加自定义监听器-->
+        <property name="customDefaultBpmnParseHandlers">
+            <list>
+                <bean class="com.dream.bpm.model.support.ProxyUserTaskBpmnParseHandler">
+                    <property name="taskListenerId" value="customTaskListener" />
+                    <property name="useDefaultUserTaskParser" value="true" />
+                </bean>
+            </list>
+        </property>
 
-        <!-- 在记录history之前执行的TaskListener -->
-        <bean id="customTaskListener" class="com.dream.bpm.model.support.ProxyTaskListener">
-            <property name="taskListeners">
-                <list>
-                    <bean class="com.dream.bpm.model.support.HumanTaskCopy"/>
-                </list>
-            </property>
-        </bean>
+    </bean>
+
+    <!-- 流程引擎全局事件处理器-->
+    <bean id="noticeTaskListener" class="com.dream.bpm.model.support.NoticeTaskListene" />
+    <bean id="globalEventListener" class="com.dream.bpm.model.support.GlobalEventListener">
+        <property name="handlers">
+            <map>
+                <entry key="TASK_CREATED" value="noticeTaskListener"/>
+            </map>
+        </property>
+    </bean>
+
+    <!--新建任务监听器-->
+    <bean id="customTaskListener" class="com.dream.bpm.model.support.ProxyTaskListener">
+        <property name="taskListeners">
+            <list>
+                <bean class="com.dream.bpm.model.support.TaskInfoListener"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"   destroy-method="close">
+        <property name="driverClassName" value="${spring.datasource.driver-class-name}" />
+        <property name="url"  value="${spring.datasource.url}" />
+        <property name="username" value="${spring.datasource.username}" />
+        <property name="password" value="${spring.datasource.password}" />
+    </bean>
 
 </beans>

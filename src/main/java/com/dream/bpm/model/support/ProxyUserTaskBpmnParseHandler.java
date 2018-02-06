@@ -18,14 +18,22 @@ import java.util.List;
 
 /**
  * Created by Dream
- * 2018/2/2.
+ * 2018/2/6.
  */
 public class ProxyUserTaskBpmnParseHandler implements BpmnParseHandler {
-    private static Logger logger = LoggerFactory
-            .getLogger(ProxyUserTaskBpmnParseHandler.class);
+
+    private static Logger logger = LoggerFactory.getLogger(ProxyUserTaskBpmnParseHandler.class);
     private String taskListenerId;
     private boolean useDefaultUserTaskParser;
 
+    @Override
+    public Collection<Class<? extends BaseElement>> getHandledTypes() {
+        List types = Collections.singletonList(UserTask.class);
+
+        return types;
+    }
+
+    @Override
     public void parse(BpmnParse bpmnParse, BaseElement baseElement) {
         if (!(baseElement instanceof UserTask)) {
             return;
@@ -62,12 +70,6 @@ public class ProxyUserTaskBpmnParseHandler implements BpmnParseHandler {
         taskDefinition
                 .addTaskListener(eventName, bpmnParse.getListenerFactory()
                         .createDelegateExpressionTaskListener(activitiListener));
-    }
-
-    public Collection<Class<? extends BaseElement>> getHandledTypes() {
-        List types = Collections.singletonList(UserTask.class);
-
-        return types;
     }
 
     public void setTaskListenerId(String taskListenerId) {

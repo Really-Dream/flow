@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Created by Dream
- * 2018/2/2.
+ * 2018/2/6.
  */
 public class ProxyTaskListener implements TaskListener{
 
@@ -23,4 +23,5 @@ public class ProxyTaskListener implements TaskListener{
     public void setTaskListeners(List<TaskListener> taskListeners) {
         this.taskListeners = taskListeners;
     }
+
 }
