@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <aside>
-                    <header><i class="fa fa-fw fa-file"></i>已部署模型</header>
+                    <header><i class="fa fa-fw fa-file"></i>我的待办</header>
                     <section>
                         <div class="container-fluid">
                             <div class="row">
@@ -43,20 +43,19 @@
     "<tbody>";
     var list = [[${list}]];
     for(var i=0; i<list.length ; i++){
-        alert(list[i].name);
-        html += "<tr><td>"+list[i].name+"</td>";
+        html += "<tr><td>"+list[i].wfinstname+"</td>";
         html += "</tr>";
     }
     html += "</tbody>";
     $("#example").html(html);
     /*]]>*/
 
-    $('#example').DataTable({
-        scrollX: true,
-        "language": {
-            url:'../public/js/vendor/DataTables/Chinese.json'
-        }
-    });
+//    $('#example').DataTable({
+//        scrollX: true,
+//        "language": {
+//            url:'../public/js/vendor/DataTables/Chinese.json'
+//        }
+//    });
 
 </script>
 

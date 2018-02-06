@@ -1,7 +1,9 @@
 package com.dream.bpm.model.controller;
 
+import com.dream.bpm.model.entity.TaskInfo;
 import com.dream.bpm.model.serviceImpl.FlowServiceImpl;
 import com.dream.bpm.model.serviceImpl.InstanceAttrServiceImpl;
+import com.dream.bpm.model.serviceImpl.TaskInfoServiceImpl;
 import com.dream.util.KeyUtil;
 import com.google.gson.Gson;
 import org.activiti.engine.HistoryService;
@@ -43,6 +45,9 @@ public class FlowController {
 
     @Autowired
     HistoryService historyService;
+
+    @Autowired
+    TaskInfoServiceImpl taskInfoService;
 
     @Autowired
     Gson gson;
@@ -130,8 +135,8 @@ public class FlowController {
     @RequestMapping("myTodo")
     public String myTodo(Model model){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Task> list = taskService.createTaskQuery().taskAssignee(userDetails.getUsername()).list();
-        model.addAttribute("list",list);
+        List<TaskInfo> taskInfos = taskInfoService.findActie(userDetails.getUsername(),"active");
+        model.addAttribute("list",taskInfos);
         return "flow/base/myTodo";
     }
 
