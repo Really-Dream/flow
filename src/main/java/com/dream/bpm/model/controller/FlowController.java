@@ -10,6 +10,7 @@ import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +37,6 @@ public class FlowController {
 
     @Autowired
     FlowServiceImpl flowService;
-
-    @Autowired
-    InstanceAttrServiceImpl instanceAttrService;
-
-    @Autowired
-    TaskService taskService;
 
     @Autowired
     HistoryService historyService;
@@ -84,6 +79,20 @@ public class FlowController {
             return "flow/BatchOnline/BatchOnline";
         }
         return "flow/"+procDefKey+"/"+procDefKey;
+    }
+
+    /**
+     * 进入待办页面
+     * @param procDefKey
+     * @return
+     */
+    @RequestMapping("myTodoIndex")
+    public String myTodoIndex(String procDefKey,String processInstanceId,Model model){
+        List<HistoricVariableInstance> list = historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstanceId).list();
+        for(HistoricVariableInstance historicVariableInstance : list){
+            model.addAttribute(historicVariableInstance.getVariableName(),historicVariableInstance.getValue());
+        }
+        return "flow/"+procDefKey+"/"+procDefKey+"All";
     }
 
     /**
@@ -135,7 +144,7 @@ public class FlowController {
     @RequestMapping("myTodo")
     public String myTodo(Model model){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<TaskInfo> taskInfos = taskInfoService.findActie(userDetails.getUsername(),"active");
+        List<TaskInfo> taskInfos = taskInfoService.findActive(userDetails.getUsername(),"active");
         model.addAttribute("list",taskInfos);
         return "flow/base/myTodo";
     }

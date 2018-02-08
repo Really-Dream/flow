@@ -14,6 +14,6 @@ public interface TaskInfoService {
 
     TaskInfo findById(String id);
 
-    List<TaskInfo> findActie(String assignee, String status);
+    List<TaskInfo> findActive(String assignee, String status);
 
 }
