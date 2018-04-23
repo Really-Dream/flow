@@ -51,7 +51,9 @@
         html += "<td>"+list[i].nodeName+"</td>";
         html += "<td>" +
             "<button type=\"button\" class=\"btn btn-primary \" style='height: 30px' " +
-            "onclick=\"window.open('/bpm/tbNodeInfo/index?procDefId="+list[i].procDefId+"&taskDefKey="+list[i].nodeId+"');\">配置</button>&nbsp;" +
+            "onclick=\"window.open('/bpm/tbNodeInfo/index?procDefId="+list[i].procDefId+"&taskDefKey="+list[i].nodeId+"');\">操作项配置</button>&nbsp;" +
+            "<button type=\"button\" class=\"btn btn-primary \" style='height: 30px' " +
+            "onclick=\"window.open('/bpm/tbNodeInfo/index?procDefId="+list[i].procDefId+"&taskDefKey="+list[i].nodeId+"');\">表单配置</button>&nbsp;" +
             "</td></tr>";
     }
     html += "</tbody>";

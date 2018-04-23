@@ -19,8 +19,13 @@ import java.util.List;
 @Service
 public class TbMenuServiceImpl implements TbMenuService{
 
+
+    private TbMenuRepository repository;
+
     @Autowired
-    TbMenuRepository repository;
+    public TbMenuServiceImpl(TbMenuRepository tbMenuRepository){
+        this.repository = tbMenuRepository;
+    }
 
     @Override
     public void save(TbMenu tbMenu) {
@@ -36,8 +41,7 @@ public class TbMenuServiceImpl implements TbMenuService{
 
     @Override
     public List<TbMenu> findAllByMenuLevel(String level) {
-        List<TbMenu> list = repository.findAllByMenuLevelOrderByMenuOrderAsc(level);
-        return list;
+        return repository.findAllByMenuLevelOrderByMenuOrderAsc(level);
     }
 
     public List<TbMenuDTO> getMenu(){
