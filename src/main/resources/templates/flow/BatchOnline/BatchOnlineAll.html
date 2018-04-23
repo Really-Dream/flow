@@ -118,7 +118,7 @@
 <div class="u-wrap">
     <div class="u-main">
 
-        <p class="u-page-title">实名制支撑改造需求-0307实名制支撑改造需求-0307实名制支撑改造需求-0307</p>
+        <p class="u-page-title" th:text="${wfinstname}">实名制支撑改造需求-0307实名制支撑改造需求-0307实名制支撑改造需求-0307</p>
         <div class="u-chapter-block" id="unify-first-block">
             <div class="lev1-Lheader">
                 <div class="LH1">1</div>
@@ -133,14 +133,10 @@
                         <table class="u-table-common" cellpadding="0" cellspacing="0">
                             <colgroup><col width="15%"><col width="35%"><col width="15%"><col width="35%"></colgroup>
                             <tr>
-                                <th>业务需求名称</th>
-                                <td colspan="3"><input type="text" class="common-input h30 w98per"></td>
-                            </tr>
-                            <tr>
                                 <th>实施周期（天）</th>
-                                <td><input type="text" class="common-input"></td>
+                                <td><input type="text" class="common-input" th:value="${round}"></td>
                                 <th>工作量（人天）</th>
-                                <td><input type="text" class="common-input"></td>
+                                <td><input type="text" class="common-input" th:value="${workload}"></td>
                             </tr>
                         </table>
                     </div>

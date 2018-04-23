@@ -43,7 +43,7 @@
     "<tbody>";
     var list = [[${list}]];
     for(var i=0; i<list.length ; i++){
-        html += "<tr><td>"+list[i].wfinstname+"</td>";
+        html += "<tr><td><a target='_blank' href='/flow/myTodoIndex?processInstanceId="+list[i].processInstanceId+"&procDefKey="+list[i].processDefinitionId.split(":")[0]+"'>"+list[i].wfinstname+"</a></td>";
         html += "</tr>";
     }
     html += "</tbody>";

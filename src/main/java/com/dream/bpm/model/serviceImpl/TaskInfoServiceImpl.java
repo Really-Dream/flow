@@ -29,7 +29,7 @@ public class TaskInfoServiceImpl implements TaskInfoService{
     }
 
     @Override
-    public List<TaskInfo> findActie(String assignee, String status) {
+    public List<TaskInfo> findActive(String assignee, String status) {
         return repository.findByAssigneeAndStatusAndTypeIsNull(assignee,status);
     }
 }

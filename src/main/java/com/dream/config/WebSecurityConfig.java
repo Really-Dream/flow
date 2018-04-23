@@ -25,21 +25,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/menu/login").permitAll()
-                //其他地址的访问都需要验证权限
-                .anyRequest().authenticated()
+                    .antMatchers("/menu/login").permitAll()
+                    //其他地址的访问都需要验证权限
+                    .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                //指定登录页
-                .loginPage("/menu/login")
-                //登录成功后默认跳转页面
-                .defaultSuccessUrl("/menu/index")
-                .permitAll()
+                    .formLogin()
+                    //指定登录页
+                    .loginPage("/menu/login")
+                    //登录成功后默认跳转页面
+//                    .defaultSuccessUrl("/menu/index")
+                    .successForwardUrl("/menu/index")
+                    .permitAll()
                 .and()
-                .logout()
-                //退出成功后默认跳转页面
-                .logoutSuccessUrl("/menu/login")
-                .permitAll();
+                    .logout()
+                    //退出成功后默认跳转页面
+                    .logoutSuccessUrl("/menu/login")
+                    .permitAll();
     }
 
     //登录验证

@@ -35,7 +35,5 @@ public class TaskInfoListener implements TaskListener{
             BeanUtils.copyProperties(delegateTask,taskInfo);
             System.out.println();
         }
-
-        System.out.println("ssss");
     }
 }
