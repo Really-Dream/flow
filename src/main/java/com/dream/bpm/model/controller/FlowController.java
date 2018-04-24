@@ -1,5 +1,6 @@
 package com.dream.bpm.model.controller;
 
+import com.dream.bpm.model.entity.Bpm;
 import com.dream.bpm.model.entity.TaskInfo;
 import com.dream.bpm.model.serviceImpl.FlowServiceImpl;
 import com.dream.bpm.model.serviceImpl.InstanceAttrServiceImpl;
@@ -83,16 +84,16 @@ public class FlowController {
 
     /**
      * 进入待办页面
-     * @param procDefKey
-     * @return
      */
     @RequestMapping("myTodoIndex")
-    public String myTodoIndex(String procDefKey,String processInstanceId,Model model){
-        List<HistoricVariableInstance> list = historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstanceId).list();
+    public String myTodoIndex(String taskId,Model model){
+        Bpm bpm = new Bpm(taskId);
+        List<HistoricVariableInstance> list = historyService.createHistoricVariableInstanceQuery().processInstanceId(bpm.getProcInsId()).list();
         for(HistoricVariableInstance historicVariableInstance : list){
             model.addAttribute(historicVariableInstance.getVariableName(),historicVariableInstance.getValue());
         }
-        return "flow/"+procDefKey+"/"+procDefKey+"All";
+        model.addAttribute("bpm",bpm);
+        return "flow/"+bpm.getProcDefKey()+"/"+bpm.getProcDefKey()+"All";
     }
 
     /**

@@ -82,8 +82,7 @@
                 $("#areatip").val($(this).text())
             });
         });
-    </script>
-    <script>
+
         $(function(){
             if($(".u-left-column").find(".u-chapter-block").length>1){
                 $("#unify-first-block").css("min-height",0);
@@ -92,6 +91,15 @@
             }
         });
 
+        //展示处理意见操作区弹窗
+        function GetNewDoArea(obj,msgid){
+            var msgw=($(window).width()-$("#"+msgid).width())/2;
+            $("#"+msgid).css({"left":msgw+"px","top":80+"px"}).slideDown(300);
+        };
+
+        function closeMyNewQuery(){
+            $("#mynewidea").hide();
+        } ;
     </script>
     <meta charset="utf-8">
     <title>统一视图</title>
@@ -99,7 +107,49 @@
 
 <body>
 
+<div class="unify-msgw" id="mynewidea" style="width:600px; display:none; top:10px; left:100px;">
+    <div class="unify-mTitle"><span class="unify-unread">填写审批意见</span> <span class="unify-closemsg" title="关闭" onclick="closeMyNewQuery();"></span> </div>
+    <div class="unify-msgListContain">
+        <table class="unify-table-judge" cellpadding="0" cellspacing="0">
+            <tr>
+                <th width="20%"><span class="redmark">*</span>当前可选操作：</th>
+                <td width="80%">
+                    <ul class="tab4ul">
+                        <li onClick="selectTakeLi(this,0);">评估通过</li>
+                        <li onClick="selectTakeLi(this,1);">请需求提出人审核</li>
+                        <li onClick="selectTakeLi(this,2);">转交其他人评估</li>
+                        <li onClick="selectTakeLi(this,3);">取消评估</li>
+                    </ul></td>
+            </tr>
+            <tr>
+                <th><span class="redmark">*</span>处理意见：</th>
+                <td><textarea class="common-input common-textarea" style="width:90%;"></textarea></td>
+            </tr>
+            <tr>
+                <th><span class="redmark">*</span>常用意见：</th>
+                <td><select class="common-input flleft"></select>
+                    <span class="mybtn mybtn-green mybtn-small flleft mleft4">保存意见</span>
+                    <span class="mybtn mybtn-orange mybtn-small flleft mleft4" onClick="shadowFocusQuery(this,'createuser');">意见管理</span>
+                </td>
+            </tr>
+            <tr>
+                <th><span class="redmark">*</span>下一步处理人：</th>
+                <td><input class="common-input flleft" type="text">
+                    <span class="mybtn mybtn-blue mybtn-medium flleft mleft4">选择</span></td>
+            </tr>
+            <tr>
+                <th><span class="redmark">*</span>阅知：</th>
+                <td><input class="common-input flleft" type="text">
+                    <span class="mybtn mybtn-blue mybtn-medium flleft mleft4">选择</span></td>
+            </tr>
+        </table>
 
+    </div>
+    <div align="right" class="unify-msg-down-line">
+        <input type="button" value="提交" class="mybtn mybtn-medium mybtn-green" onclick="submit('submit')">
+        <input type="button" value="关闭" class="mybtn mybtn-medium mybtn-red" onclick="closeMyNewQuery();">
+    </div>
+</div>
 <!--To Top-->
 <div class="back-top" id="back-top" title="返回顶部"><div onClick="javascript:scroll(0,0)" class="back-icon" id="back-icon"></div> </div>
 <div class="right-fixed-part">
@@ -118,7 +168,7 @@
 <div class="u-wrap">
     <div class="u-main">
 
-        <p class="u-page-title" th:text="${wfinstname}">实名制支撑改造需求-0307实名制支撑改造需求-0307实名制支撑改造需求-0307</p>
+        <p class="u-page-title"  th:text="${wfinstname}">实名制支撑改造需求-0307实名制支撑改造需求-0307实名制支撑改造需求-0307</p>
         <div class="u-chapter-block" id="unify-first-block">
             <div class="lev1-Lheader">
                 <div class="LH1">1</div>
@@ -133,10 +183,14 @@
                         <table class="u-table-common" cellpadding="0" cellspacing="0">
                             <colgroup><col width="15%"><col width="35%"><col width="15%"><col width="35%"></colgroup>
                             <tr>
+                                <th>业务需求名称</th>
+                                <td colspan="3" id="reqname" th:text="${wfinstname}">关于4331集团单位存量用户实名制信息管理模块的优化</td>
+                            </tr>
+                            <tr>
                                 <th>实施周期（天）</th>
-                                <td><input type="text" class="common-input" th:value="${round}"></td>
+                                <td th:text="${round}">关于4331集团单位存量用户实名制信息管理模块的优化</td>
                                 <th>工作量（人天）</th>
-                                <td><input type="text" class="common-input" th:value="${workload}"></td>
+                                <td th:text="${workload}">关于4331集团单位存量用户实名制信息管理模块的优化</td>
                             </tr>
                         </table>
                     </div>
@@ -144,130 +198,47 @@
                 </div>
             </div>
 
-            <div class="u-chapter-block">
-                <div class="lev1-Lheader">
-                    <div class="LH1">5</div>
-                    <div class="LH2"><a name="link5">移交维护</a></div>
-                    <hr class="titleLine">
-                    <div class="clickIcon"></div>
-                </div>
-                <div class="u-content-box" id="u-process-content_4">
-                    <div class="u-content">
-                        <div class="u-content-title">需求过程评估</div>
-                        <div class="u-content-part">
-                            <table class="u-table-common" cellpadding="0" cellspacing="0">
-                                <colgroup><col width="15%"><col width="35%"><col width="15%"><col width="35%"></colgroup>
-                                <tr>
-                                    <th>实施周期（天）</th>
-                                    <td><input type="text" class="common-input"></td>
-                                    <th>工作量（人天）</th>
-                                    <td><input type="text" class="common-input"></td>
-                                </tr>
-                                <tr>
-                                    <th>受理累计时常（天）</th>
-                                    <td><input type="text" class="common-input"></td>
-                                    <th>受理累计时常占比</th>
-                                    <td><input type="text" class="common-input"></td>
-                                </tr>
-                                <tr>
-                                    <th>审批累计时常（天）</th>
-                                    <td><input type="text" class="common-input"></td>
-                                    <th>审批累计时常占比</th>
-                                    <td><input type="text" class="common-input"></td>
-                                </tr>
-                                <tr>
-                                    <th>评审累计时常（天）</th>
-                                    <td><input type="text" class="common-input"></td>
-                                    <th>评审累计时常占比</th>
-                                    <td><input type="text" class="common-input"></td>
-                                </tr>
-                                <tr>
-                                    <th>开发累计时常（天）</th>
-                                    <td><input type="text" class="common-input"></td>
-                                    <th>开发累计时常占比</th>
-                                    <td><input type="text" class="common-input"></td>
-                                </tr>
-                                <tr>
-                                    <th>测试累计时常（天）</th>
-                                    <td><input type="text" class="common-input"></td>
-                                    <th>测试累计时常占比</th>
-                                    <td><input type="text" class="common-input"></td>
-                                </tr>
-                                <tr>
-                                    <th>测试审核累计时常（天）</th>
-                                    <td><input type="text" class="common-input"></td>
-                                    <th>测试审核累计时常占比</th>
-                                    <td><input type="text" class="common-input"></td>
-                                </tr>
-                                <tr>
-                                    <th>待上线累计时常（天）</th>
-                                    <td><input type="text" class="common-input"></td>
-                                    <th>待上线累计时常占比</th>
-                                    <td><input type="text" class="common-input"></td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="u-content-title">需求质量评估</div>
-                        <div class="u-content-part" style="display:none;">
-                            <table class="u-table-common" cellpadding="0" cellspacing="0">
-                                <colgroup><col width="15%"><col width="35%"><col width="15%"><col width="35%"></colgroup>
-                                <tr>
-                                    <th>测试缺陷数量</th>
-                                    <td><input type="text" class="common-input"></td>
-                                    <th>上线故障次数</th>
-                                    <td><input type="text" class="common-input"></td>
-                                </tr>
-                                <tr>
-                                    <th>测试用例数量</th>
-                                    <td><input type="text" class="common-input"></td>
-                                    <th>开发任务管理</th>
-                                    <td><input type="text" class="common-input"></td>
-                                </tr>
-                                <tr>
-                                    <th>文档完整性</th>
-                                    <td colspan="3"><textarea class="common-input common-textarea"></textarea></td>
-                                </tr>
-                                <tr>
-                                    <th>备注</th>
-                                    <td colspan="3"><textarea class="common-input common-textarea"></textarea></td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="u-content-title">需求效益评估</div>
-                        <div class="u-content-part" style="display:none;">
-                            <table class="u-table-common" cellpadding="0" cellspacing="0">
-                                <colgroup><col width="15%"><col width="35%"><col width="15%"><col width="35%"></colgroup>
-                                <tr>
-                                    <th>累计业务办理量</th>
-                                    <td><input type="text" class="common-input"></td>
-                                    <th>累计业务使用量</th>
-                                    <td><input type="text" class="common-input"></td>
-                                </tr>
-                                <tr>
-                                    <th>累计用户新增量</th>
-                                    <td><input type="text" class="common-input"></td>
-                                    <th>其他</th>
-                                    <td><input type="text" class="common-input"></td>
-                                </tr>
-                                <tr>
-                                    <th>效益描述</th>
-                                    <td colspan="3"><textarea class="common-input common-textarea"></textarea></td>
-                                </tr>
-                            </table>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
 
         </div>
     </div>
 </div>
-<!--右侧目录区域-->
-
-
+    <!--右侧目录区域-->
 </body>
 
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var param = {};
+    function submit(type) {
+        param["taskId"] = [[${bpm.taskId}]];
+        param["businessKey"] = [[${bpm.businessKey}]];
+        param["type"] = type;
 
+        showProcessing();
+
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        $.ajax({
+            type: "POST",
+            url: "/flow/start",
+            data: {param:JSON.stringify(param)},
+            dataType: "json",
+            async:true,
+            beforeSend : function(xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function(data){
+                alert(data);
+                hideProcessing();
+                window.opener = null;
+                window.open("", "_self");
+                window.close();
+            },
+            error:function () {
+                alert("失败");
+                hideProcessing();
+            }
+        });
+    }
+    /*]]>*/
+</script>
 </html>
